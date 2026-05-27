@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 
 import '../config/ai_config.dart';
+import '../config/store_config.dart';
 import '../services/local_storage.dart';
 import '../services/openrouter_service.dart';
 
@@ -86,8 +87,8 @@ class MockProduct {
   final String hint;
 }
 
-class AcnePhotoAnalysisEntry {
-  const AcnePhotoAnalysisEntry({
+class MolePhotoAnalysisEntry {
+  const MolePhotoAnalysisEntry({
     required this.id,
     required this.imagePath,
     required this.analysis,
@@ -106,8 +107,8 @@ class AcnePhotoAnalysisEntry {
         'createdAt': createdAt.toIso8601String(),
       };
 
-  factory AcnePhotoAnalysisEntry.fromJson(Map<String, dynamic> json) {
-    return AcnePhotoAnalysisEntry(
+  factory MolePhotoAnalysisEntry.fromJson(Map<String, dynamic> json) {
+    return MolePhotoAnalysisEntry(
       id: json['id']?.toString() ?? '',
       imagePath: json['imagePath']?.toString() ?? '',
       analysis: json['analysis']?.toString() ?? '',
@@ -117,17 +118,13 @@ class AcnePhotoAnalysisEntry {
   }
 }
 
-class SkinJourneyNotifier extends ChangeNotifier {
-  static const String monthlyProductId = 'com.acnetrackai.premium.monthly';
-  static const String yearlyProductId = 'com.acnetrackai.premium.yearly';
-  static const String lifetimeProductId = 'com.acnetrackai.premium.lifetime';
-  static const Set<String> premiumProductIds = {
-    monthlyProductId,
-    yearlyProductId,
-    lifetimeProductId,
-  };
+class MoleJourneyNotifier extends ChangeNotifier {
+  static const String monthlyProductId = StoreConfig.monthlyProductId;
+  static const String yearlyProductId = StoreConfig.yearlyProductId;
+  static const String lifetimeProductId = StoreConfig.lifetimeProductId;
+  static const Set<String> premiumProductIds = StoreConfig.premiumProductIds;
 
-  SkinJourneyNotifier(this._storage) {
+  MoleJourneyNotifier(this._storage) {
     _purchaseSubscription = _iap.purchaseStream.listen(
       _onPurchaseUpdated,
       onError: (_) {},
@@ -152,7 +149,7 @@ class SkinJourneyNotifier extends ChangeNotifier {
   DateTime selectedDaily = DateTime.now();
   Map<String, bool> _dailyTasks = {};
   List<String> _progressPhotoPaths = [];
-  List<AcnePhotoAnalysisEntry> _photoAnalysisHistory = [];
+  List<MolePhotoAnalysisEntry> _photoAnalysisHistory = [];
   bool _darkModeEnabled = false;
   bool hydrated = false;
   bool _isPremium = false;
@@ -169,11 +166,11 @@ class SkinJourneyNotifier extends ChangeNotifier {
   List<DailyHabit> _dailyHabits = const [];
   List<NutritionItem> _nutritionItems = const [];
   String _mainCause = '—';
-  String _acneTypeLabel = '—';
-  double _healingPercent = 0;
-  int _clearSkinDaysEstimate = 0;
-  double _clearanceGoalFraction = 0;
-  int _aiAcneScore = 0;
+  String _molePatternLabel = '—';
+  double _monitoringPercent = 0;
+  int _nextCheckInDaysEstimate = 0;
+  double _improvementGoalFraction = 0;
+  int _moleWatchScore = 0;
 
   Future<void> _load() async {
     answers = Map.from(_storage.answers);
@@ -181,7 +178,7 @@ class SkinJourneyNotifier extends ChangeNotifier {
     _routineChecked['night'] = _storage.getRoutineChecked('night');
     _progressPhotoPaths = _storage.progressPhotos;
     _photoAnalysisHistory = _storage.photoAnalysisHistory
-        .map(AcnePhotoAnalysisEntry.fromJson)
+        .map(MolePhotoAnalysisEntry.fromJson)
         .where((e) => e.id.isNotEmpty)
         .toList();
     _darkModeEnabled = _storage.darkModeEnabled;
@@ -235,7 +232,7 @@ class SkinJourneyNotifier extends ChangeNotifier {
   bool isDailyDone(String id) => _dailyTasks[id] ?? false;
 
   List<String> get progressPhotoPaths => List.unmodifiable(_progressPhotoPaths);
-  List<AcnePhotoAnalysisEntry> get photoAnalysisHistory =>
+  List<MolePhotoAnalysisEntry> get photoAnalysisHistory =>
       List.unmodifiable(_photoAnalysisHistory);
   List<RoutineStep> get morningSteps => List.unmodifiable(_morningSteps);
   List<RoutineStep> get nightSteps => List.unmodifiable(_nightSteps);
@@ -279,18 +276,18 @@ class SkinJourneyNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<AcnePhotoAnalysisEntry> analyzeAcneFromPhoto(String imagePath) async {
+  Future<MolePhotoAnalysisEntry> analyzeMoleFromPhoto(String imagePath) async {
     photoAnalysisLoading = true;
     notifyListeners();
     try {
       final now = DateTime.now();
-      final fallbackEntry = AcnePhotoAnalysisEntry(
+      final fallbackEntry = MolePhotoAnalysisEntry(
         id: now.microsecondsSinceEpoch.toString(),
         imagePath: imagePath,
         analysis:
             'Photo analysis needs AI API setup first.\n\n'
             'Add OPENROUTER_API_KEY to your `.env` file, then try again.\n'
-            'Once enabled, you will get acne-focused observations and weekly improvements.',
+            'Once enabled, you will get mole-focused observations and weekly comparisons.',
         createdAt: now,
       );
       if (AiConfig.openRouterApiKey.isEmpty) {
@@ -301,12 +298,12 @@ class SkinJourneyNotifier extends ChangeNotifier {
 
       final bytes = await File(imagePath).readAsBytes();
       final dataUrl = 'data:image/jpeg;base64,${base64Encode(bytes)}';
-      final analysis = await _openRouter.acnePhotoAnalysis(
+      final analysis = await _openRouter.molePhotoAnalysis(
         imageDataUrl: dataUrl,
         userContext: 'User profile JSON: ${jsonEncode(answers)}',
       );
 
-      final entry = AcnePhotoAnalysisEntry(
+      final entry = MolePhotoAnalysisEntry(
         id: now.microsecondsSinceEpoch.toString(),
         imagePath: imagePath,
         analysis: analysis,
@@ -315,14 +312,14 @@ class SkinJourneyNotifier extends ChangeNotifier {
       lastPhotoAnalysis = analysis;
       await _appendPhotoAnalysisEntry(entry);
       chat.add(const ChatMessage(
-        text: 'I uploaded a photo for acne-focused analysis.',
+        text: 'I uploaded a photo for mole map-style analysis.',
         isUser: true,
       ));
       chat.add(ChatMessage(text: analysis, isUser: false));
       return entry;
     } catch (e) {
       final text = _formatChatError(e);
-      final entry = AcnePhotoAnalysisEntry(
+      final entry = MolePhotoAnalysisEntry(
         id: DateTime.now().microsecondsSinceEpoch.toString(),
         imagePath: imagePath,
         analysis: text,
@@ -337,7 +334,7 @@ class SkinJourneyNotifier extends ChangeNotifier {
     }
   }
 
-  Future<void> _appendPhotoAnalysisEntry(AcnePhotoAnalysisEntry entry) async {
+  Future<void> _appendPhotoAnalysisEntry(MolePhotoAnalysisEntry entry) async {
     _photoAnalysisHistory = [entry, ..._photoAnalysisHistory]
         .where((e) => e.imagePath.trim().isNotEmpty)
         .take(30)
@@ -453,15 +450,16 @@ class SkinJourneyNotifier extends ChangeNotifier {
   String _chatSystemPrompt() {
     final buffer = StringBuffer()
       ..writeln(
-        'You are AcneTrack AI+, a supportive skincare coach inside a mobile app.',
+        'You are MoleTrack AI+, a supportive mole-monitoring coach inside a mobile app.',
       )
       ..writeln(
-        'You are not a medical professional: do not diagnose. Encourage seeing '
-        'a dermatologist for persistent, severe, or painful acne, or for '
-        'prescription decisions.',
+        'You are not a medical professional: do not diagnose skin cancer. '
+        'Encourage in-person evaluation for any new, changing, asymmetric, '
+        'multicolor, large, or bleeding lesions, or anything the user is unsure about.',
       )
       ..writeln(
         'Be concise and practical (short paragraphs or light bullets). '
+        'Emphasize consistent photos, lighting, and ABCDE self-check habits. '
         'Reference the user profile when helpful.',
       )
       ..writeln('User onboarding questionnaire (JSON):')
@@ -495,7 +493,7 @@ class SkinJourneyNotifier extends ChangeNotifier {
   Future<Map<String, dynamic>> _generateAiContentFromAi() async {
     final response = await _openRouter.chatCompletion(
       systemPrompt:
-          'You generate concise app content JSON for an acne-care assistant. '
+          'You generate concise app content JSON for a mole-monitoring and sun-safety assistant. '
           'Return only valid JSON.',
       messages: [
         {
@@ -505,18 +503,18 @@ Generate personalized app content from this onboarding JSON:
 ${jsonEncode(answers)}
 
 Return only JSON with keys:
-homeInsights: {mainCause:string, acneTypeLabel:string, healingPercent:number(0-100), clearSkinDaysEstimate:number, clearanceGoalFraction:number(0-1), acneScore:number(0-100)}
+homeInsights: {mainCause:string, molePatternLabel:string, monitoringPercent:number(0-100), nextCheckInDaysEstimate:number, improvementGoalFraction:number(0-1), moleWatchScore:number(0-100)}
 dailyHabits: [{id:string,title:string,emoji:string}]
 careRoutine: {morning:[{id,category,productName,blurb}], night:[{id,category,productName,blurb}]}
 nutritionItems: [{id,name,amount,tags:string[]}]
 chatSeed: {welcome:string, products:[{brand,name,hint}]}
 
 Constraints:
-- 6 to 10 dailyHabits
-- 3 to 5 morning steps
-- 2 to 4 night steps
-- 3 to 6 nutrition items
-- Short practical text.
+- 6 to 10 dailyHabits focused on mole photo habits, sun protection, and self-checks
+- 3 to 5 morning steps (SPF, gentle cleansing, documentation tips)
+- 2 to 4 night steps (moisturizer, retinoid only if appropriate for the profile, photo reminders)
+- 3 to 6 nutrition items that support skin resilience (antioxidants, omega-3s, hydration)
+- Short practical text; never claim medical diagnosis.
 '''
         }
       ],
@@ -549,22 +547,30 @@ Constraints:
       _mainCause = home['mainCause']?.toString().trim().isNotEmpty == true
           ? home['mainCause'].toString().trim()
           : _mainCause;
-      _acneTypeLabel =
-          home['acneTypeLabel']?.toString().trim().isNotEmpty == true
-              ? home['acneTypeLabel'].toString().trim()
-              : _acneTypeLabel;
-      _healingPercent = (home['healingPercent'] is num)
-          ? (home['healingPercent'] as num).toDouble().clamp(0, 100)
-          : _healingPercent;
-      _clearSkinDaysEstimate = (home['clearSkinDaysEstimate'] is num)
-          ? (home['clearSkinDaysEstimate'] as num).toInt().clamp(1, 365)
-          : _clearSkinDaysEstimate;
-      _clearanceGoalFraction = (home['clearanceGoalFraction'] is num)
-          ? (home['clearanceGoalFraction'] as num).toDouble().clamp(0.0, 1.0)
-          : _clearanceGoalFraction;
-      _aiAcneScore = (home['acneScore'] is num)
-          ? (home['acneScore'] as num).toInt().clamp(0, 100)
-          : _aiAcneScore;
+      final moleLbl = home['molePatternLabel']?.toString().trim();
+      final legacyAcneLbl = home['acneTypeLabel']?.toString().trim();
+      if (moleLbl != null && moleLbl.isNotEmpty) {
+        _molePatternLabel = moleLbl;
+      } else if (legacyAcneLbl != null && legacyAcneLbl.isNotEmpty) {
+        _molePatternLabel = legacyAcneLbl;
+      }
+      final mon = home['monitoringPercent'] ?? home['healingPercent'];
+      if (mon is num) {
+        _monitoringPercent = mon.toDouble().clamp(0, 100);
+      }
+      final nextDays = home['nextCheckInDaysEstimate'] ?? home['clearSkinDaysEstimate'];
+      if (nextDays is num) {
+        _nextCheckInDaysEstimate = nextDays.toInt().clamp(1, 365);
+      }
+      final impFrac =
+          home['improvementGoalFraction'] ?? home['clearanceGoalFraction'];
+      if (impFrac is num) {
+        _improvementGoalFraction = impFrac.toDouble().clamp(0.0, 1.0);
+      }
+      final watch = home['moleWatchScore'] ?? home['acneScore'];
+      if (watch is num) {
+        _moleWatchScore = watch.toInt().clamp(0, 100);
+      }
     }
 
     final habitsRaw = map['dailyHabits'];
@@ -645,29 +651,29 @@ Constraints:
     return _mainCause;
   }
 
-  String get acneTypeLabel {
+  String get molePatternLabel {
     if (!isPremium) return 'Premium only';
-    return _acneTypeLabel;
+    return _molePatternLabel;
   }
 
-  double get healingPercent {
+  double get monitoringPercent {
     if (!isPremium) return 0;
-    return _healingPercent;
+    return _monitoringPercent;
   }
 
-  int get acneScore {
+  int get moleWatchScore {
     if (!isPremium) return 0;
-    return _aiAcneScore;
+    return _moleWatchScore;
   }
 
-  int get clearSkinDaysEstimate {
+  int get nextCheckInDaysEstimate {
     if (!isPremium) return 0;
-    return _clearSkinDaysEstimate;
+    return _nextCheckInDaysEstimate;
   }
 
-  double get clearanceGoalFraction {
+  double get improvementGoalFraction {
     if (!isPremium) return 0;
-    return _clearanceGoalFraction;
+    return _improvementGoalFraction;
   }
 
   List<bool> weekCompletionPreview() {

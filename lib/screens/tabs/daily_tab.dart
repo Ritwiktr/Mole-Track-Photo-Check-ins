@@ -11,7 +11,7 @@ class DailyTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final n = context.watch<SkinJourneyNotifier>();
+    final n = context.watch<MoleJourneyNotifier>();
     final scheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final selected = n.selectedDaily;
@@ -31,14 +31,14 @@ class DailyTab extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         children: [
           Text(
-            'Your acne routine',
+            'Your mole habits',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Small daily actions build long-term results.',
+            'Small daily actions build a reliable photo history.',
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 12),
@@ -253,7 +253,7 @@ class DailyTab extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             child: habits.isEmpty
                 ? Text(
-                    'No AI habits yet. Add API key to generate your personalized daily plan.',
+                    'No AI habits yet. Add an API key to generate your personalized mole habits.',
                     style: Theme.of(context).textTheme.bodySmall,
                   )
                 : Column(

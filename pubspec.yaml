@@ -1,5 +1,5 @@
-name: acnetrack_ai
-description: Personalized acne tracking with local-first storage.
+name: mole_track_ai
+description: Mole tracking and photo check-ins with local-first storage.
 publish_to: "none"
 version: 1.0.0+3
 

@@ -1,16 +1,14 @@
-# acnetrack_ai
+# mole_track_ai
 
-A new Flutter project.
+Flutter app: **Mole Track** — mole photo check-ins, AI-assisted summaries, and local-first storage.
 
-## Getting Started
+## Store identifiers
 
-This project is a starting point for a Flutter application.
+| Platform | ID |
+|----------|-----|
+| Bundle / application ID | `com.moletrack.app` |
+| Premium monthly | `com.moletrack.app.premium.monthly` |
+| Premium yearly | `com.moletrack.app.premium.yearly` |
+| Premium lifetime | `com.moletrack.app.premium.lifetime` |
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Dart source of truth: `lib/config/store_config.dart`. Create matching products in App Store Connect and Google Play Console before testing purchases.

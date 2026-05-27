@@ -26,7 +26,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
   Future<void> _send() async {
     final text = _controller.text;
     if (text.trim().isEmpty) return;
-    final notifier = context.read<SkinJourneyNotifier>();
+    final notifier = context.read<MoleJourneyNotifier>();
     if (notifier.chatAwaitingReply) return;
     _controller.clear();
     await notifier.sendChat(text);
@@ -44,7 +44,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final notifier = context.watch<SkinJourneyNotifier>();
+    final notifier = context.watch<MoleJourneyNotifier>();
     final messages = notifier.chat;
     final busy = notifier.chatAwaitingReply;
 
@@ -71,9 +71,9 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('AcneTrack AI+'),
+                    const Text('MoleTrack AI+'),
                     Text(
-                      'Personal skin assistant',
+                      'Mole & sun-safety coach',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -110,7 +110,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
                           onSubmitted: (_) => _send(),
                           enabled: !busy,
                           decoration: const InputDecoration(
-                            hintText: 'Ask anything about acne…',
+                            hintText: 'Ask anything about moles or photo check-ins…',
                             filled: false,
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: 10,

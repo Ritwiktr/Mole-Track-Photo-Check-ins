@@ -26,7 +26,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = context.watch<SkinJourneyNotifier>();
+    final notifier = context.watch<MoleJourneyNotifier>();
     final scheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
@@ -77,7 +77,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              'Setting up your personalized AI skin insights...',
+                              'Setting up your personalized mole insights...',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -167,13 +167,13 @@ class _MainShellScreenState extends State<MainShellScreen> {
             ListTile(
               leading: const Icon(Icons.photo_camera_outlined),
               title: const Text('Take photo'),
-              subtitle: const Text('Capture current acne condition'),
+              subtitle: const Text('Capture a clear photo of the area you track'),
               onTap: () => Navigator.pop(ctx, ImageSource.camera),
             ),
             ListTile(
               leading: const Icon(Icons.photo_library_outlined),
               title: const Text('Choose from gallery'),
-              subtitle: const Text('Upload an existing skin photo'),
+              subtitle: const Text('Upload an existing mole-map photo'),
               onTap: () => Navigator.pop(ctx, ImageSource.gallery),
             ),
           ],
@@ -203,7 +203,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
     }
     if (file == null || !context.mounted) return;
 
-    final notifier = context.read<SkinJourneyNotifier>();
+    final notifier = context.read<MoleJourneyNotifier>();
     try {
       await notifier.addProgressPhotoPath(file.path);
     } on StateError catch (e) {
@@ -226,13 +226,13 @@ class _MainShellScreenState extends State<MainShellScreen> {
               child: CircularProgressIndicator(strokeWidth: 2.6),
             ),
             SizedBox(width: 12),
-            Expanded(child: Text('Analyzing acne photo...')),
+            Expanded(child: Text('Analyzing mole photo...')),
           ],
         ),
       ),
     );
 
-    final entry = await notifier.analyzeAcneFromPhoto(file.path);
+    final entry = await notifier.analyzeMoleFromPhoto(file.path);
     if (context.mounted) Navigator.of(context, rootNavigator: true).pop();
     if (!context.mounted) return;
 

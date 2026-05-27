@@ -95,7 +95,7 @@ class _RoutinePanelState extends State<_RoutinePanel> {
 
   @override
   Widget build(BuildContext context) {
-    final n = context.watch<SkinJourneyNotifier>();
+    final n = context.watch<MoleJourneyNotifier>();
     final scheme = Theme.of(context).colorScheme;
     final period = _morning ? 'morning' : 'night';
     final steps = _morning ? n.morningSteps : n.nightSteps;
@@ -123,12 +123,12 @@ class _RoutinePanelState extends State<_RoutinePanel> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Skincare made simple',
+                      'Mole-friendly care, simplified',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'Day-by-day steps you can actually finish.',
+                      'Sunscreen, gentle cleansing, and steady photo angles.',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -151,7 +151,7 @@ class _RoutinePanelState extends State<_RoutinePanel> {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: steps.isEmpty
               ? Text(
-                  'No AI routine steps yet. Add API key to generate personalized care steps.',
+                  'No AI routine steps yet. Add an API key to generate personalized mole-care steps.',
                   style: Theme.of(context).textTheme.bodySmall,
                 )
               : Column(
@@ -224,7 +224,7 @@ class _NutritionPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    final foods = context.watch<SkinJourneyNotifier>().nutritionItems;
+    final foods = context.watch<MoleJourneyNotifier>().nutritionItems;
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 120),
       physics: const BouncingScrollPhysics(),
@@ -247,7 +247,7 @@ class _NutritionPanel extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                'Small, steady upgrades beat crash diets. These picks support calm skin and steady energy — all stored locally — no accounts.',
+                'Small upgrades support skin resilience and sun recovery — stored locally, no accounts.',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: scheme.onSurfaceVariant,
                       height: 1.4,
@@ -261,7 +261,7 @@ class _NutritionPanel extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: foods.isEmpty
               ? Text(
-                  'No AI nutrition suggestions yet. Add API key to generate personalized nutrition support.',
+                  'No AI nutrition suggestions yet. Add an API key for antioxidant-forward picks.',
                   style: Theme.of(context).textTheme.bodySmall,
                 )
               : Column(

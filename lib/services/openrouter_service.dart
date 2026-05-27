@@ -111,7 +111,7 @@ class OpenRouterService {
     return text;
   }
 
-  Future<String> acnePhotoAnalysis({
+  Future<String> molePhotoAnalysis({
     required String imageDataUrl,
     String? userContext,
   }) async {
@@ -130,14 +130,15 @@ class OpenRouterService {
         {
           'role': 'system',
           'content':
-              'You are an acne-focused skin coach. Analyze the provided face photo '
-                  'for acne patterns only (inflammation severity, area clusters, redness, '
-                  'possible irritation signs). Do not identify the person. Do not provide '
-                  'medical diagnosis. Keep output concise and practical.\n\n'
+              'You are a mole-monitoring coach (not a doctor). Analyze the skin photo for '
+                  'visible moles and freckles only: approximate size symmetry hints, border '
+                  'regularity hints, color variation hints, and whether comparing serial photos '
+                  'would help. Do not identify the person. Never diagnose skin cancer or '
+                  'replace a clinic exam. Keep output concise and practical.\n\n'
                   'Return sections exactly:\n'
                   '1) Quick observation (2-3 bullets)\n'
-                  '2) What to improve this week (3-5 bullets)\n'
-                  '3) Caution signs to monitor (2 bullets)\n'
+                  '2) What to improve this week (3-5 bullets: lighting, angles, SPF, photo schedule)\n'
+                  '3) Caution signs to monitor (2 bullets: changes worth an in-person check)\n'
                   '4) When to see a dermatologist (1 short paragraph).',
         },
         {
@@ -146,7 +147,7 @@ class OpenRouterService {
             {
               'type': 'text',
               'text':
-                  'Analyze this acne photo and suggest improvements. ${userContext ?? ''}',
+                  'Analyze this mole-map style skin photo and suggest improvements. ${userContext ?? ''}',
             },
             {
               'type': 'image_url',

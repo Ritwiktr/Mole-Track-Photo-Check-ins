@@ -13,13 +13,13 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final n = context.watch<SkinJourneyNotifier>();
+    final n = context.watch<MoleJourneyNotifier>();
     final scheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final score = n.acneScore;
+    final score = n.moleWatchScore;
     final pct = (score / 100).clamp(0.0, 1.0);
-    final clearance = n.clearanceGoalFraction;
-    final healing = n.healingPercent;
+    final clearance = n.improvementGoalFraction;
+    final healing = n.monitoringPercent;
     final target = DateTime.now().add(const Duration(days: 28));
 
     return PeachBackdrop(
@@ -40,7 +40,7 @@ class HomeTab extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'skin health',
+                    'mole map',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: scheme.onSurfaceVariant,
                         ),
@@ -106,7 +106,7 @@ class HomeTab extends StatelessWidget {
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                'Keep your routine consistent for best results this week.',
+                                'Keep consistent photos and SPF for the clearest comparisons this week.',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall
@@ -123,12 +123,12 @@ class HomeTab extends StatelessWidget {
                 SoftCard(
                   child: Column(
                     children: [
-                      _metricRow(context, 'Main acne cause', n.mainCause),
+                      _metricRow(context, 'Top focus area', n.mainCause),
                       _softDivider(context),
                       _metricRow(
                         context,
-                        'Clear skin in',
-                        '${n.clearSkinDaysEstimate} days',
+                        'Next guided check-in',
+                        '${n.nextCheckInDaysEstimate} days',
                       ),
                       _softDivider(context),
                       Row(
@@ -140,7 +140,7 @@ class HomeTab extends StatelessWidget {
                           const SizedBox(width: 10),
                           Expanded(
                             child: Text(
-                              'Clear up to ${(clearance * 100).round()}% of your acne',
+                              'Reach up to ${(clearance * 100).round()}% of your monitoring goal',
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ),
@@ -165,14 +165,14 @@ class HomeTab extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Acne score',
+                                  'Mole watch score',
                                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                                         color: scheme.onSurfaceVariant,
                                       ),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'Personalized from your questionnaire',
+                                  'Higher means stronger habits for spotting changes early.',
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -201,10 +201,10 @@ class HomeTab extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _metricRow(context, 'Acne type', n.acneTypeLabel),
+                      _metricRow(context, 'Pattern summary', n.molePatternLabel),
                       _softDivider(context),
                       Text(
-                        'Healing process',
+                        'Monitoring focus',
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                               color: scheme.onSurfaceVariant,
                             ),
@@ -233,7 +233,7 @@ class HomeTab extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Skin update in',
+                                  'Photo check-in',
                                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                                         color: scheme.onSurfaceVariant,
                                       ),

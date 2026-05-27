@@ -14,21 +14,21 @@ Future<void> main() async {
   final storage = await LocalStorage.open();
   runApp(
     ChangeNotifierProvider(
-      create: (_) => SkinJourneyNotifier(storage),
-      child: const AcneTrackApp(),
+      create: (_) => MoleJourneyNotifier(storage),
+      child: const MoleTrackApp(),
     ),
   );
 }
 
-class AcneTrackApp extends StatelessWidget {
-  const AcneTrackApp({super.key});
+class MoleTrackApp extends StatelessWidget {
+  const MoleTrackApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final n = context.watch<SkinJourneyNotifier>();
+    final n = context.watch<MoleJourneyNotifier>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Acne Track: Daily Care',
+      title: 'Mole Track: Photo Check-ins',
       theme: buildAppTheme(),
       darkTheme: buildDarkAppTheme(),
       themeMode: n.darkModeEnabled ? ThemeMode.dark : ThemeMode.light,
@@ -42,7 +42,7 @@ class _Bootstrap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final n = context.watch<SkinJourneyNotifier>();
+    final n = context.watch<MoleJourneyNotifier>();
     if (!n.hydrated) {
       return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

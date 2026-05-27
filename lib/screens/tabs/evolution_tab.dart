@@ -20,7 +20,7 @@ class EvolutionTab extends StatefulWidget {
 class _EvolutionTabState extends State<EvolutionTab> {
   @override
   Widget build(BuildContext context) {
-    final n = context.watch<SkinJourneyNotifier>();
+    final n = context.watch<MoleJourneyNotifier>();
     final scheme = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final history = n.photoAnalysisHistory;
@@ -37,7 +37,7 @@ class _EvolutionTabState extends State<EvolutionTab> {
               const Icon(Icons.history_rounded, color: AppColors.accent),
               const SizedBox(width: 8),
               Text(
-                'Analysis history',
+                'Mole analysis history',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ],
@@ -49,7 +49,7 @@ class _EvolutionTabState extends State<EvolutionTab> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Free plan shows only your latest report and limits uploads to 1 per week.',
+                    'Free plan shows only your latest mole summary and limits uploads to 1 per week.',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 8),
@@ -64,7 +64,7 @@ class _EvolutionTabState extends State<EvolutionTab> {
           if (visibleHistory.isEmpty)
             SoftCard(
               child: Text(
-                'No analysis yet. Tap + to add a photo and generate your first report.',
+                'No analysis yet. Tap + to add a photo and generate your first mole check-in.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             )

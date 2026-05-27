@@ -26,7 +26,7 @@ abstract final class AiConfig {
     if (v != null && v.isNotEmpty) return v;
     return const String.fromEnvironment(
       'OPENROUTER_HTTP_REFERER',
-      defaultValue: 'https://acnetrack.local',
+      defaultValue: 'https://moletrack.local',
     );
   }
 
@@ -35,7 +35,7 @@ abstract final class AiConfig {
     if (v != null && v.isNotEmpty) return v;
     return const String.fromEnvironment(
       'OPENROUTER_APP_TITLE',
-      defaultValue: 'AcneTrack AI',
+      defaultValue: 'MoleTrack AI',
     );
   }
 }

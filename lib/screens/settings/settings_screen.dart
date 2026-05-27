@@ -10,7 +10,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = context.watch<SkinJourneyNotifier>();
+    final notifier = context.watch<MoleJourneyNotifier>();
     return PeachBackdrop(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -35,7 +35,7 @@ class SettingsScreen extends StatelessWidget {
                 subtitle: Text(
                   notifier.isPremium
                       ? 'Active plan: ${notifier.activePremiumProductId}'
-                      : 'Unlock unlimited uploads and full progress data',
+                      : 'Unlock unlimited uploads and full mole-map history',
                 ),
                 trailing: notifier.isPremium
                     ? const Icon(Icons.verified_rounded, color: Colors.green)

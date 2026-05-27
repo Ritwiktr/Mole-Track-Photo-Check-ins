@@ -10,7 +10,7 @@ import '../../widgets/soft_components.dart';
 class PhotoAnalysisResultScreen extends StatelessWidget {
   const PhotoAnalysisResultScreen({super.key, required this.entry});
 
-  final AcnePhotoAnalysisEntry entry;
+  final MolePhotoAnalysisEntry entry;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class PhotoAnalysisResultScreen extends StatelessWidget {
     return PeachBackdrop(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(title: const Text('Acne Analysis')),
+        appBar: AppBar(title: const Text('Mole analysis')),
         body: ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
           children: [
@@ -103,7 +103,9 @@ class PhotoAnalysisResultScreen extends StatelessWidget {
         continue;
       }
       if (normalized.contains('dermatologist') ||
-          normalized.contains('see a dermatologist')) {
+          normalized.contains('see a dermatologist') ||
+          normalized.contains('clinician') ||
+          normalized.contains('see a doctor')) {
         current = 'derm';
         continue;
       }
@@ -157,7 +159,7 @@ class PhotoAnalysisResultScreen extends StatelessWidget {
         bullets: caution.take(3).toList(),
       ),
       _UiSection(
-        title: 'Time to dermatologist',
+        title: 'When to see a dermatologist',
         icon: Icons.local_hospital_outlined,
         bullets: const [],
         paragraph: derm.take(2).join(' '),

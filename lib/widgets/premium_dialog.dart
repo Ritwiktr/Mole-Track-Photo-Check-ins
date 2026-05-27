@@ -23,33 +23,33 @@ class _PremiumDialog extends StatefulWidget {
 }
 
 class _PremiumDialogState extends State<_PremiumDialog> {
-  String _selectedProductId = SkinJourneyNotifier.yearlyProductId;
+  String _selectedProductId = MoleJourneyNotifier.yearlyProductId;
 
   @override
   Widget build(BuildContext context) {
-    final n = context.watch<SkinJourneyNotifier>();
+    final n = context.watch<MoleJourneyNotifier>();
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
     final products = {for (final p in n.premiumProducts) p.id: p};
     final options = <_PlanOption>[
       _PlanOption(
         title: 'Monthly',
-        subtitle: 'Unlimited uploads + full insights (auto-renews monthly)',
+        subtitle: 'Unlimited uploads + full mole insights (auto-renews monthly)',
         fallbackPrice: '\$4.99',
-        productId: SkinJourneyNotifier.monthlyProductId,
+        productId: MoleJourneyNotifier.monthlyProductId,
       ),
       _PlanOption(
         title: 'Yearly',
-        subtitle: 'Unlimited uploads + full insights (auto-renews yearly)',
+        subtitle: 'Unlimited uploads + full mole insights (auto-renews yearly)',
         fallbackPrice: '\$29.99',
-        productId: SkinJourneyNotifier.yearlyProductId,
+        productId: MoleJourneyNotifier.yearlyProductId,
         badge: 'Best value',
       ),
       _PlanOption(
         title: 'Lifetime',
-        subtitle: 'One-time purchase: unlimited uploads + full insights',
+        subtitle: 'One-time purchase: unlimited uploads + full mole insights',
         fallbackPrice: '\$59.99',
-        productId: SkinJourneyNotifier.lifetimeProductId,
+        productId: MoleJourneyNotifier.lifetimeProductId,
       ),
     ];
     final selected = options.firstWhere(
@@ -100,7 +100,7 @@ class _PremiumDialogState extends State<_PremiumDialog> {
             Text(
               '• Unlimited weekly photo uploads\n'
               '• Complete progress history\n'
-              '• Full AI skin insights and trend tracking',
+              '• Full AI mole insights and trend tracking',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: scheme.onSurfaceVariant,
                 height: 1.35,

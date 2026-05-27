@@ -40,7 +40,7 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
   }
 
   Future<void> _finish() async {
-    final notifier = context.read<SkinJourneyNotifier>();
+    final notifier = context.read<MoleJourneyNotifier>();
     await notifier.completeOnboarding(_answers);
   }
 
@@ -133,7 +133,7 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
                   ),
                 ),
                 PrimaryPillButton(
-                  label: _page == total - 1 ? 'Start my plan' : 'Continue',
+                  label: _page == total - 1 ? 'Start tracking' : 'Continue',
                   icon: Icons.arrow_forward_rounded,
                   onPressed: _canContinue ? _next : null,
                 ),
