@@ -23,7 +23,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
   int _index = 0;
   final ImagePicker _picker = ImagePicker();
 
-  static const _titles = ['Home', 'Treatment', 'Progress', 'Habits'];
+  static const _titles = ['Home', 'Routine', 'Progress', 'Habits'];
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              'Setting up your personalized dermatology insights...',
+                              'Setting up your personalized skincare insights...',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -128,13 +128,13 @@ class _MainShellScreenState extends State<MainShellScreen> {
         child: Row(
           children: [
             _NavItem(
-              icon: Icons.home_rounded,
+              icon: Icons.spa_rounded,
               label: _titles[0],
               selected: _index == 0,
               onTap: () => setState(() => _index = 0),
             ),
             _NavItem(
-              icon: Icons.medical_services_outlined,
+              icon: Icons.favorite_outline_rounded,
               label: _titles[1],
               selected: _index == 1,
               onTap: () => setState(() => _index = 1),
@@ -247,7 +247,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
               child: CircularProgressIndicator(strokeWidth: 2.6),
             ),
             SizedBox(width: 12),
-            Expanded(child: Text('Analyzing dermatology photo...')),
+            Expanded(child: Text('Analyzing skin photo...')),
           ],
         ),
       ),

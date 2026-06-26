@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppColors {
-  static const Color surfaceLight = Color(0xFFEEF6F9);
-  static const Color surfaceDeep = Color(0xFFDCE9F0);
-  static const Color cream = Color(0xFFF5FAFC);
+  static const Color peach = Color(0xFFFFF4ED);
+  static const Color peachDeep = Color(0xFFFFE7D7);
+  static const Color cream = Color(0xFFFFF8F3);
   static const Color card = Color(0xFFFFFFFF);
-  static const Color textPrimary = Color(0xFF0F172A);
-  static const Color textSecondary = Color(0xFF64748B);
-  static const Color accent = Color(0xFF0D9488);
-  static const Color accentSoft = Color(0xFF99F6E4);
-  static const Color success = Color(0xFF059669);
-  static const Color bubbleUser = Color(0xFFCCFBF1);
-  static const Color outline = Color(0xFFCBD5E1);
+  static const Color textPrimary = Color(0xFF201A17);
+  static const Color textSecondary = Color(0xFF6B5F56);
+  static const Color accent = Color(0xFFFF7A30);
+  static const Color accentSoft = Color(0xFFFFD6BF);
+  static const Color success = Color(0xFF22A06B);
+  static const Color bubbleUser = Color(0xFFFFEADF);
+  static const Color outline = Color(0xFFF0D7C8);
 }

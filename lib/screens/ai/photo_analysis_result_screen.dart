@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 
 import '../../providers/skin_journey_provider.dart';
 import '../../theme/app_colors.dart';
-import '../../widgets/medical_sources_panel.dart';
 import '../../widgets/soft_components.dart';
 
 class PhotoAnalysisResultScreen extends StatelessWidget {
@@ -17,10 +16,10 @@ class PhotoAnalysisResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final sections = _buildSections(entry.analysis);
-    return DermBackdrop(
+    return PeachBackdrop(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(title: const Text('Dermatology analysis')),
+        appBar: AppBar(title: const Text('Skin analysis')),
         body: ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
           children: [
@@ -69,10 +68,6 @@ class PhotoAnalysisResultScreen extends StatelessWidget {
                   ),
                 )
                 ,
-            const SizedBox(height: 12),
-            SoftCard(
-              child: const MedicalSourcesPanel(compact: true),
-            ),
           ],
         ),
       ),

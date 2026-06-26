@@ -267,7 +267,7 @@ class MoleJourneyNotifier extends ChangeNotifier {
         analysis:
             'Photo analysis needs AI API setup first.\n\n'
             'Add OPENROUTER_API_KEY to your `.env` file, then try again.\n'
-            'Once enabled, you will get dermatology-focused observations and weekly comparisons.',
+            'Once enabled, you will get skincare-focused observations and weekly comparisons.',
         createdAt: now,
       );
       if (AiConfig.openRouterApiKey.isEmpty) {
@@ -306,7 +306,7 @@ class MoleJourneyNotifier extends ChangeNotifier {
       lastPhotoAnalysis = analysis;
       await _appendPhotoAnalysisEntry(entry);
       chat.add(const ChatMessage(
-        text: 'I uploaded a photo for dermatology analysis.',
+        text: 'I uploaded a photo for skincare analysis.',
         isUser: true,
       ));
       chat.add(ChatMessage(text: analysis, isUser: false));
@@ -475,7 +475,7 @@ class MoleJourneyNotifier extends ChangeNotifier {
   String _chatSystemPrompt() {
     final buffer = StringBuffer()
       ..writeln(
-        'You are AI Dermatologist, a supportive dermatology assistant inside a mobile app.',
+        'You are Skin Care AI: Routine Coach, a supportive skincare routine coach inside a mobile app.',
       )
       ..writeln(
         'You are not a medical professional: do not diagnose medical conditions. '
@@ -485,9 +485,7 @@ class MoleJourneyNotifier extends ChangeNotifier {
       ..writeln(
         'Be concise and practical (short paragraphs or light bullets). '
         'Emphasize routine consistency, gentle progression, SPF use, and progress photos. '
-        'Reference the user profile when helpful. '
-        'For general skin-health facts, align with public sources such as AAD and NIH MedlinePlus. '
-        'Remind users that full citations are available under Health information sources in Settings.',
+        'Reference the user profile when helpful.',
       )
       ..writeln('User onboarding questionnaire (JSON):')
       ..writeln(jsonEncode(answers));
@@ -521,7 +519,7 @@ class MoleJourneyNotifier extends ChangeNotifier {
   Future<Map<String, dynamic>> _generateAiContentFromAi() async {
     final response = await _openRouter.chatCompletion(
       systemPrompt:
-          'You generate concise app content JSON for a dermatology and skin-health assistant. '
+          'You generate concise app content JSON for a skincare routine and skin-health assistant. '
           'Return only valid JSON.',
       messages: [
         {
@@ -537,7 +535,7 @@ careRoutine: {morning:[{id,category,productName,blurb}], night:[{id,category,pro
 chatSeed: {welcome:string, products:[{brand,name,hint}]}
 
 Constraints:
-- 6 to 10 dailyHabits focused on dermatology consistency, sun protection, and progress tracking
+- 6 to 10 dailyHabits focused on skincare consistency, sun protection, and progress tracking
 - 3 to 5 morning steps (SPF, gentle cleansing, documentation tips)
 - 2 to 4 night steps (moisturizer, retinoid only if appropriate for the profile, photo reminders)
 - Short practical text; never claim medical diagnosis.

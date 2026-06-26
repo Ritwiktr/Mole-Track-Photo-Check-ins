@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import '../../screens/onboarding/ai_data_consent_screen.dart';
 import '../../providers/skin_journey_provider.dart';
 import '../../theme/app_colors.dart';
-import '../../widgets/medical_sources_panel.dart';
 import '../../widgets/soft_components.dart';
 
 class AiCoachScreen extends StatefulWidget {
@@ -54,7 +53,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
     final messages = notifier.chat;
     final busy = notifier.chatAwaitingReply;
 
-    return DermBackdrop(
+    return PeachBackdrop(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
@@ -77,9 +76,9 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('AI Dermatologist'),
+                    const Text('Skin Care AI'),
                     Text(
-                      'Dermatology Coach',
+                      'Routine Coach',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -87,19 +86,6 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
               ),
             ],
           ),
-          actions: [
-            IconButton(
-              tooltip: 'Health sources',
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const MedicalSourcesScreen(),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.menu_book_outlined),
-            ),
-          ],
         ),
         body: Column(
           children: [
@@ -107,19 +93,8 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
               child: ListView.builder(
                 controller: _scroll,
                 padding: const EdgeInsets.fromLTRB(16, 10, 16, 16),
-                itemCount: messages.length + 1,
+                itemCount: messages.length,
                 itemBuilder: (context, i) {
-                  if (i == messages.length) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 4, bottom: 8),
-                      child: SoftCard(
-                        child: MedicalSourcesPanel(
-                          compact: true,
-                          showDisclaimer: messages.any((m) => !m.isUser),
-                        ),
-                      ),
-                    );
-                  }
                   final m = messages[i];
                   return _Bubble(message: m);
                 },
@@ -144,7 +119,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
                           enabled: !busy,
                           decoration: const InputDecoration(
                             hintText:
-                                'Ask about skin conditions, treatments, or products…',
+                                'Ask anything about skincare routine or products…',
                             filled: false,
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: 10,

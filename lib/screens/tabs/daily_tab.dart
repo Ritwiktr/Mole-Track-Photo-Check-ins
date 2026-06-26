@@ -25,13 +25,13 @@ class DailyTab extends StatelessWidget {
       (i) => DateTime.now().subtract(Duration(days: 4 - i)),
     );
 
-    return DermBackdrop(
+    return PeachBackdrop(
       child: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         physics: const BouncingScrollPhysics(),
         children: [
           Text(
-            'Your dermatology habits',
+            'Your skincare habits',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
@@ -253,7 +253,7 @@ class DailyTab extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             child: habits.isEmpty
                 ? Text(
-                    'No AI habits yet. Add an API key to generate your personalized dermatology habits.',
+                    'No AI habits yet. Add an API key to generate your personalized skincare habits.',
                     style: Theme.of(context).textTheme.bodySmall,
                   )
                 : Column(

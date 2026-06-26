@@ -27,7 +27,7 @@ class _EvolutionTabState extends State<EvolutionTab> {
     final isPremium = n.isPremium;
     final visibleHistory = isPremium ? history : history.take(1).toList();
 
-    return DermBackdrop(
+    return PeachBackdrop(
       child: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         physics: const BouncingScrollPhysics(),

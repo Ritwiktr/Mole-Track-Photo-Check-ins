@@ -5,7 +5,6 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../config/legal_config.dart';
 import '../../providers/skin_journey_provider.dart';
 import '../../widgets/ai_data_consent.dart';
-import '../../widgets/medical_sources_panel.dart';
 import '../../widgets/premium_dialog.dart';
 import '../../widgets/soft_components.dart';
 
@@ -22,7 +21,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notifier = context.watch<MoleJourneyNotifier>();
-    return DermBackdrop(
+    return PeachBackdrop(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(title: const Text('Settings')),
@@ -46,9 +45,9 @@ class SettingsScreen extends StatelessWidget {
                 title: const Text('AI data sharing'),
                 subtitle: Text(
                   notifier.aiDataSharingConsented
-                      ? 'Coach, insights, and photo analysis send data to '
-                          'OpenRouter (openrouter.ai) and its AI model partners.'
-                      : 'Off — AI features will not send data to OpenRouter.',
+                      ? 'Coach, insights, and photo analysis may send data to '
+                          'third-party AI providers.'
+                      : 'Off — AI features will not send data to third parties.',
                 ),
                 onChanged: (enabled) async {
                   if (enabled) {
@@ -58,24 +57,6 @@ class SettingsScreen extends StatelessWidget {
                   } else {
                     await notifier.revokeAiDataSharingConsent();
                   }
-                },
-              ),
-            ),
-            const SizedBox(height: 12),
-            SoftCard(
-              child: ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Health information sources'),
-                subtitle: const Text(
-                  'Citations for skin-health guidance (AAD, NIH, FDA, CDC)',
-                ),
-                trailing: const Icon(Icons.chevron_right_rounded),
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => const MedicalSourcesScreen(),
-                    ),
-                  );
                 },
               ),
             ),
@@ -110,7 +91,7 @@ class SettingsScreen extends StatelessWidget {
                 subtitle: Text(
                   notifier.isPremium
                       ? 'Active plan: ${notifier.activePremiumProductId}'
-                      : 'Unlock unlimited uploads and full dermatology history',
+                      : 'Unlock unlimited uploads and full skincare history',
                 ),
                 trailing: notifier.isPremium
                     ? const Icon(Icons.verified_rounded, color: Colors.green)

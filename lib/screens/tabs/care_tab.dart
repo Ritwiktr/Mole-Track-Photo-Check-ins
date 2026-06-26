@@ -11,7 +11,7 @@ class CareTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return DermBackdrop(
+    return PeachBackdrop(
       child: Column(
         children: [
           Padding(
@@ -20,7 +20,7 @@ class CareTab extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    'Treatment plan',
+                    'Routine plan',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -90,7 +90,7 @@ class _RoutinePanelState extends State<_RoutinePanel> {
                   color: AppColors.accentSoft.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(Icons.medical_services_outlined, color: AppColors.accent),
+                child: const Icon(Icons.spa_outlined, color: AppColors.accent),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -98,12 +98,12 @@ class _RoutinePanelState extends State<_RoutinePanel> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Clear treatment steps, better outcomes',
+                      'Simple routine, better skin days',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'Follow AM/PM dermatology steps for steady, visible progress.',
+                      'Follow clear AM/PM steps for steady, visible progress.',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -126,7 +126,7 @@ class _RoutinePanelState extends State<_RoutinePanel> {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: steps.isEmpty
               ? Text(
-                  'No AI treatment steps yet. Add an API key to generate personalized dermatology steps.',
+                  'No AI routine steps yet. Add an API key to generate personalized skincare steps.',
                   style: Theme.of(context).textTheme.bodySmall,
                 )
               : Column(
@@ -142,7 +142,7 @@ class _RoutinePanelState extends State<_RoutinePanel> {
                               height: 42,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: AppColors.surfaceDeep,
+                                color: AppColors.peachDeep,
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Icon(

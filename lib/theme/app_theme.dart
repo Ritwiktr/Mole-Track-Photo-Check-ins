@@ -20,7 +20,7 @@ ThemeData buildAppTheme() {
   );
 
   return base.copyWith(
-    scaffoldBackgroundColor: AppColors.surfaceLight,
+    scaffoldBackgroundColor: AppColors.peach,
     appBarTheme: AppBarTheme(
       centerTitle: false,
       elevation: 0,
@@ -139,20 +139,20 @@ ThemeData buildDarkAppTheme() {
     useMaterial3: true,
     brightness: Brightness.dark,
     colorScheme: const ColorScheme.dark(
-      primary: Color(0xFF2DD4BF),
-      onPrimary: Color(0xFF042F2E),
-      secondary: Color(0xFF34D399),
-      surface: Color(0xFF1A2332),
-      onSurface: Color(0xFFF1F5F9),
-      outline: Color(0xFF334155),
+      primary: Color(0xFFFF9E57),
+      onPrimary: Colors.black,
+      secondary: Color(0xFF48C78E),
+      surface: Color(0xFF1E1F22),
+      onSurface: Color(0xFFF4F4F5),
+      outline: Color(0xFF3B3F46),
     ),
   );
 
   return base.copyWith(
-    scaffoldBackgroundColor: const Color(0xFF0B1120),
+    scaffoldBackgroundColor: const Color(0xFF141518),
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
-      foregroundColor: const Color(0xFFF1F5F9),
+      foregroundColor: const Color(0xFFF4F4F5),
       elevation: 0,
       scrolledUnderElevation: 0,
       systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
@@ -161,24 +161,24 @@ ThemeData buildDarkAppTheme() {
       titleTextStyle: GoogleFonts.plusJakartaSans(
         fontSize: 18,
         fontWeight: FontWeight.w600,
-        color: const Color(0xFFF1F5F9),
+        color: const Color(0xFFF4F4F5),
       ),
     ),
     textTheme: GoogleFonts.plusJakartaSansTextTheme(base.textTheme).apply(
-      bodyColor: const Color(0xFFF1F5F9),
-      displayColor: const Color(0xFFF1F5F9),
+      bodyColor: const Color(0xFFF4F4F5),
+      displayColor: const Color(0xFFF4F4F5),
     ),
     cardTheme: CardThemeData(
-      color: const Color(0xFF1A2332),
+      color: const Color(0xFF1E1F22),
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       shadowColor: Colors.black.withValues(alpha: 0.35),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: const Color(0xFF1E293B),
+      fillColor: const Color(0xFF252830),
       hintStyle: GoogleFonts.plusJakartaSans(
-        color: const Color(0xFF94A3B8),
+        color: const Color(0xFFACB3BF),
         fontSize: 14,
       ),
       border: OutlineInputBorder(
@@ -188,31 +188,31 @@ ThemeData buildDarkAppTheme() {
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
     ),
     dividerTheme: const DividerThemeData(
-      color: Color(0xFF334155),
+      color: Color(0xFF3B3F46),
       thickness: 1,
       space: 20,
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: const Color(0xFF2DD4BF),
-      foregroundColor: const Color(0xFF042F2E),
+      backgroundColor: const Color(0xFFFF9E57),
+      foregroundColor: Colors.black,
       elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
     navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: const Color(0xFF111827),
-      indicatorColor: const Color(0xFF2DD4BF).withValues(alpha: 0.22),
+      backgroundColor: const Color(0xFF1B1D22),
+      indicatorColor: const Color(0xFFFF9E57).withValues(alpha: 0.25),
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         final selected = states.contains(WidgetState.selected);
         return GoogleFonts.plusJakartaSans(
           fontSize: 11,
           fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-          color: selected ? const Color(0xFF5EEAD4) : const Color(0xFF94A3B8),
+          color: selected ? const Color(0xFFFFB37A) : const Color(0xFFACB3BF),
         );
       }),
       iconTheme: WidgetStateProperty.resolveWith((states) {
         final selected = states.contains(WidgetState.selected);
         return IconThemeData(
-          color: selected ? const Color(0xFF5EEAD4) : const Color(0xFF94A3B8),
+          color: selected ? const Color(0xFFFFB37A) : const Color(0xFFACB3BF),
           size: 24,
         );
       }),

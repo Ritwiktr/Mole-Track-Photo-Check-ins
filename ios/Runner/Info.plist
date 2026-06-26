@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>AI Dermatologist</string>
+	<string>Skin Care AI: Routine Coach</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>AI Dermatologist</string>
+	<string>Skin Care AI: Routine Coach</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -25,11 +25,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>AI Dermatologist uses the camera to capture dermatology progress photos.</string>
+	<string>Skin Care AI uses the camera to capture skincare progress photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>AI Dermatologist uses your photo library so you can upload skin condition photos.</string>
+	<string>Skin Care AI uses your photo library so you can upload skincare progress photos.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>AI Dermatologist may save selected photos to your library when you choose to do so.</string>
+	<string>Skin Care AI may save selected photos to your library when you choose to do so.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

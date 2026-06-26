@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../config/legal_config.dart';
 import '../../providers/skin_journey_provider.dart';
 import '../../widgets/ai_data_consent.dart';
 import '../../widgets/soft_components.dart';
@@ -22,7 +21,7 @@ class AiDataConsentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
 
-    return DermBackdrop(
+    return PeachBackdrop(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
@@ -44,7 +43,7 @@ class AiDataConsentScreen extends StatelessWidget {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
-                        'AI features & OpenRouter',
+                        'AI features & your data',
                         style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                               fontWeight: FontWeight.w700,
                             ),
@@ -69,7 +68,7 @@ class AiDataConsentScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-                  child: const Text(LegalConfig.aiConsentAgreeLabel),
+                  child: const Text('Agree and enable AI'),
                 ),
                 const SizedBox(height: 10),
                 TextButton(

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate App Store Review Information PDF for AI Dermatologist."""
+"""Generate App Store Review Information PDF for Skin Care AI: Routine Coach."""
 
 from datetime import date
 from pathlib import Path
@@ -14,7 +14,7 @@ class ReviewPDF(FPDF):
         if self.page_no() > 1:
             self.set_font("Helvetica", "I", 8)
             self.set_text_color(100, 100, 100)
-            self.cell(0, 8, "AI Dermatologist - App Review Information", align="R")
+            self.cell(0, 8, "Skin Care AI: Routine Coach - App Review Information", align="R")
             self.ln(4)
             self.set_text_color(0, 0, 0)
 
@@ -55,7 +55,7 @@ def build_pdf() -> None:
     pdf.cell(0, 12, "App Store Review Information", align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(4)
     pdf.set_font("Helvetica", "B", 16)
-    pdf.cell(0, 10, "AI Dermatologist", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.cell(0, 10, "Skin Care AI: Routine Coach", align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(8)
     pdf.set_font("Helvetica", "", 11)
     pdf.cell(0, 7, "Prepared for Apple App Review", align="C", new_x="LMARGIN", new_y="NEXT")
@@ -63,7 +63,7 @@ def build_pdf() -> None:
     pdf.ln(12)
     pdf.set_font("Helvetica", "", 10)
     meta = [
-        "Bundle ID: com.app.dermatology",
+        "Bundle ID: com.skincare.routineai",
         "Version: 1.0.0 (Build 3)",
         "Platform: iOS",
         "Category: Health & Fitness / Lifestyle (wellness)",
@@ -100,16 +100,16 @@ def build_pdf() -> None:
     )
     pdf.body("Purpose:")
     pdf.body(
-        "AI Dermatologist helps users build and maintain a consistent "
-        "dermatology treatment plan through habit tracking, morning and night "
-        "treatment steps, progress photos, and AI-powered dermatology coaching. The app "
+        "Skin Care AI: Routine Coach helps users build and maintain a consistent "
+        "skincare routine through habit tracking, morning and night routine "
+        "checklists, progress photos, and AI-powered wellness coaching. The app "
         "does not provide medical diagnosis or treatment."
     )
     pdf.body("Target audience:")
     pdf.body(
-        "Adults interested in dermatology and skin health, including beginners "
-        "establishing a treatment routine and users tracking concerns such as acne, "
-        "eczema, rosacea, hyperpigmentation, or general skin health over time."
+        "Adults interested in skincare consistency, including beginners establishing "
+        "a routine and users tracking concerns such as breakouts, uneven tone, "
+        "dryness, sensitivity, or oil control over time."
     )
     pdf.body("Problem it solves:")
     pdf.body(
@@ -146,7 +146,7 @@ def build_pdf() -> None:
     pdf.body("Reviewer setup steps:")
     steps = [
         "Install the submitted build from App Review or TestFlight.",
-        "On first launch, complete the onboarding questionnaire (tap Continue through all screens, then Start my plan).",
+        "On first launch, complete the onboarding questionnaire (tap Continue through all screens, then Start my routine).",
         "When prompted, allow Camera and/or Photo Library access for progress photos.",
         "Ensure an active internet connection for AI features (see Section 5).",
     ]
@@ -156,7 +156,7 @@ def build_pdf() -> None:
     pdf.body("Main features - how to access:")
     features = [
         "Home dashboard: Bottom tab Home - routine score and insights (full metrics require Premium).",
-        "Treatment plan: Tab Treatment - morning/night dermatology steps.",
+        "Routine plan: Tab Routine - morning/night skincare steps.",
         "Progress photos: Center + button - choose camera or photo library; AI analysis runs after upload.",
         "Progress history: Tab Progress - timeline of check-ins.",
         "Daily habits: Tab Habits.",
@@ -177,9 +177,9 @@ def build_pdf() -> None:
         pdf.bullet(s)
 
     pdf.body("Product identifiers:")
-    pdf.bullet("com.app.dermatology.premium.monthly (auto-renewable subscription)")
-    pdf.bullet("com.app.dermatology.premium.yearly (auto-renewable subscription)")
-    pdf.bullet("com.app.dermatology.premium.lifetime (non-consumable)")
+    pdf.bullet("com.skincare.routineai.premium.monthly (auto-renewable subscription)")
+    pdf.bullet("com.skincare.routineai.premium.yearly (auto-renewable subscription)")
+    pdf.bullet("com.skincare.routineai.premium.lifetime (non-consumable)")
 
     pdf.body(
         "Sample files: Not required. Reviewers may use any appropriate photo from "
@@ -242,7 +242,7 @@ def build_pdf() -> None:
     )
     pdf.body("Industry classification:")
     pdf.body(
-        "General wellness and dermatology tracking. The app is NOT a medical "
+        "General wellness and skincare routine tracking. The app is NOT a medical "
         "device and does NOT provide medical diagnosis, prescription, or treatment. "
         "Copy and AI system prompts explicitly state the app is not a doctor and "
         "users should consult qualified healthcare professionals for medical concerns."
@@ -275,7 +275,7 @@ def build_pdf() -> None:
         5,
         "No login required. Complete onboarding, then use + to add a progress photo "
         "(allow Camera/Photos). Premium: Sandbox Apple ID > Settings > Upgrade to "
-        "Premium. Product IDs: com.app.dermatology.premium.monthly, .yearly, "
+        "Premium. Product IDs: com.skincare.routineai.premium.monthly, .yearly, "
         ".lifetime. AI requires network (OpenRouter). Not medical advice. Same "
         "features in all regions. Update Privacy Policy and Support URLs before submit.",
     )

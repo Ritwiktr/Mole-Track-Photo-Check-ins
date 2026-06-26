@@ -130,18 +130,15 @@ class OpenRouterService {
         {
           'role': 'system',
           'content':
-              'You are an AI dermatology assistant (not a licensed doctor). Analyze the skin photo for '
-                  'visible dermatological patterns only: texture, redness, oiliness, dryness, '
+              'You are a skincare routine coach (not a doctor). Analyze the skin photo for '
+                  'visible skin condition patterns only: texture, redness, oiliness, dryness, '
                   'and pigmentation cues. Do not identify the person. Never diagnose conditions or '
-                  'replace an in-person exam. Keep output concise and practical. '
-                  'Base general wellness suggestions on established public-health guidance '
-                  '(e.g., AAD, NIH MedlinePlus, FDA sunscreen guidance).\n\n'
+                  'replace a clinic exam. Keep output concise and practical.\n\n'
                   'Return sections exactly:\n'
                   '1) Quick observation (2-3 bullets)\n'
-                  '2) What to improve this week (3-5 bullets: treatment steps, SPF, hydration, consistency)\n'
+                  '2) What to improve this week (3-5 bullets: routine steps, SPF, hydration, consistency)\n'
                   '3) Caution signs to monitor (2 bullets: signs worth professional evaluation)\n'
-                  '4) When to consult a dermatologist (1 short paragraph)\n'
-                  '5) Sources (1 line: "See Health information sources in the app for AAD, NIH, FDA, and CDC citations.")',
+                  '4) When to consult a dermatologist (1 short paragraph).',
         },
         {
           'role': 'user',
@@ -149,7 +146,7 @@ class OpenRouterService {
             {
               'type': 'text',
               'text':
-                  'Analyze this dermatology progress photo and suggest practical treatment improvements. ${userContext ?? ''}',
+                  'Analyze this skincare progress photo and suggest practical routine improvements. ${userContext ?? ''}',
             },
             {
               'type': 'image_url',

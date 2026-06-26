@@ -16,20 +16,20 @@ Future<void> main() async {
   runApp(
     ChangeNotifierProvider(
       create: (_) => MoleJourneyNotifier(storage),
-      child: const AiDermatologistApp(),
+      child: const SkinCareAiApp(),
     ),
   );
 }
 
-class AiDermatologistApp extends StatelessWidget {
-  const AiDermatologistApp({super.key});
+class SkinCareAiApp extends StatelessWidget {
+  const SkinCareAiApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     final n = context.watch<MoleJourneyNotifier>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'AI Dermatologist',
+      title: 'Skin Care AI: Routine Coach',
       theme: buildAppTheme(),
       darkTheme: buildDarkAppTheme(),
       themeMode: n.darkModeEnabled ? ThemeMode.dark : ThemeMode.light,

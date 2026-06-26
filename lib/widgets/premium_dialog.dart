@@ -35,14 +35,14 @@ class _PremiumDialogState extends State<_PremiumDialog> {
       _PlanOption(
         title: 'Monthly',
         subtitle:
-            'Unlimited scans, full insights, and AI dermatology help (monthly)',
+            'Unlimited scans, full insights, and AI routine help (monthly)',
         fallbackPrice: '\$4.99',
         productId: MoleJourneyNotifier.monthlyProductId,
       ),
       _PlanOption(
         title: 'Yearly',
         subtitle:
-            'Unlimited scans, full insights, and AI dermatology help (yearly)',
+            'Unlimited scans, full insights, and AI routine help (yearly)',
         fallbackPrice: '\$29.99',
         productId: MoleJourneyNotifier.yearlyProductId,
         badge: 'Best value',
@@ -50,7 +50,7 @@ class _PremiumDialogState extends State<_PremiumDialog> {
       _PlanOption(
         title: 'Lifetime',
         subtitle:
-            'Pay once: unlimited scans, full insights, and AI dermatology help',
+            'Pay once: unlimited scans, full insights, and AI routine help',
         fallbackPrice: '\$59.99',
         productId: MoleJourneyNotifier.lifetimeProductId,
       ),
@@ -103,7 +103,7 @@ class _PremiumDialogState extends State<_PremiumDialog> {
             Text(
               '• Unlimited photo scans and check-ins\n'
               '• Full progress timeline and history\n'
-              '• Advanced AI insights + personalized dermatology coaching',
+              '• Advanced AI insights + personalized routine coaching',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: scheme.onSurfaceVariant,
                 height: 1.35,

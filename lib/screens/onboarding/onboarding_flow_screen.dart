@@ -73,7 +73,7 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
   @override
   Widget build(BuildContext context) {
     final total = onboardingQuestions.length;
-    return DermBackdrop(
+    return PeachBackdrop(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
@@ -133,7 +133,7 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
                   ),
                 ),
                 PrimaryPillButton(
-                  label: _page == total - 1 ? 'Start my plan' : 'Continue',
+                  label: _page == total - 1 ? 'Start my routine' : 'Continue',
                   icon: Icons.arrow_forward_rounded,
                   onPressed: _canContinue ? _next : null,
                 ),
@@ -329,7 +329,7 @@ class _ScaleEditor extends StatelessWidget {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceDeep,
+                  color: AppColors.peachDeep,
                   borderRadius: BorderRadius.circular(999),
                   border: Border.all(
                     color: AppColors.outline.withValues(alpha: 0.45),
