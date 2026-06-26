@@ -31,14 +31,14 @@ class DailyTab extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         children: [
           Text(
-            'Your skincare habits',
+            'Your mole habits',
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.w700,
                 ),
           ),
           const SizedBox(height: 8),
           Text(
-            'Build momentum with a few easy actions every day.',
+            'Small daily actions build a reliable photo history.',
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: 12),
@@ -60,7 +60,7 @@ class DailyTab extends StatelessWidget {
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  'Habit view',
+                  '9-day view',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                         color: isDark ? scheme.primary : AppColors.accent,
                         fontWeight: FontWeight.w700,
@@ -253,7 +253,7 @@ class DailyTab extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             child: habits.isEmpty
                 ? Text(
-                    'No AI habits yet. Add an API key to generate your personalized skincare habits.',
+                    'No AI habits yet. Add an API key to generate your personalized mole habits.',
                     style: Theme.of(context).textTheme.bodySmall,
                   )
                 : Column(

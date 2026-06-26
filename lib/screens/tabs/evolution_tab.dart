@@ -37,7 +37,7 @@ class _EvolutionTabState extends State<EvolutionTab> {
               const Icon(Icons.history_rounded, color: AppColors.accent),
               const SizedBox(width: 8),
               Text(
-                'Progress timeline',
+                'Mole analysis history',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ],
@@ -49,7 +49,7 @@ class _EvolutionTabState extends State<EvolutionTab> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Free plan includes your latest result and 1 upload per week.',
+                    'Free plan shows only your latest mole summary and limits uploads to 1 per week.',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 8),
@@ -64,7 +64,7 @@ class _EvolutionTabState extends State<EvolutionTab> {
           if (visibleHistory.isEmpty)
             SoftCard(
               child: Text(
-                'No entries yet. Tap + to add a photo and create your first progress check-in.',
+                'No analysis yet. Tap + to add a photo and generate your first mole check-in.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             )

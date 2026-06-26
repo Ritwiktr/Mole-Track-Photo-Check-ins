@@ -19,7 +19,7 @@ class PhotoAnalysisResultScreen extends StatelessWidget {
     return PeachBackdrop(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(title: const Text('Skin analysis')),
+        appBar: AppBar(title: const Text('Mole analysis')),
         body: ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
           children: [
@@ -159,7 +159,7 @@ class PhotoAnalysisResultScreen extends StatelessWidget {
         bullets: caution.take(3).toList(),
       ),
       _UiSection(
-        title: 'When to consult a professional',
+        title: 'When to see a dermatologist',
         icon: Icons.local_hospital_outlined,
         bullets: const [],
         paragraph: derm.take(2).join(' '),

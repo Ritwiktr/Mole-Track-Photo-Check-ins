@@ -92,9 +92,9 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
                     Text(
                       '${_page + 1}/$total',
                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textSecondary,
-                      ),
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textSecondary,
+                          ),
                     ),
                   ],
                 ),
@@ -133,7 +133,7 @@ class _OnboardingFlowScreenState extends State<OnboardingFlowScreen> {
                   ),
                 ),
                 PrimaryPillButton(
-                  label: _page == total - 1 ? 'Start my routine' : 'Continue',
+                  label: _page == total - 1 ? 'Start tracking' : 'Continue',
                   icon: Icons.arrow_forward_rounded,
                   onPressed: _canContinue ? _next : null,
                 ),
@@ -169,17 +169,17 @@ class _QuestionPage extends StatelessWidget {
           Text(
             q.prompt,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.w600,
-              height: 1.15,
-            ),
+                  fontWeight: FontWeight.w600,
+                  height: 1.15,
+                ),
           ),
           const SizedBox(height: 10),
           Text(
             q.subtitle,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: AppColors.textSecondary,
-              height: 1.4,
-            ),
+                  color: AppColors.textSecondary,
+                  height: 1.4,
+                ),
           ),
           const SizedBox(height: 22),
           if (q.type == QuestionType.singleChoice) ...[
@@ -256,8 +256,8 @@ class _OptionTile extends StatelessWidget {
                   child: Text(
                     label,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
+                          fontWeight: FontWeight.w700,
+                        ),
                   ),
                 ),
                 AnimatedScale(
@@ -319,15 +319,13 @@ class _ScaleEditor extends StatelessWidget {
               Text(
                 q.minLabel ?? '${q.min}',
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: AppColors.textSecondary,
-                  fontWeight: FontWeight.w600,
-                ),
+                      color: AppColors.textSecondary,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 8,
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 decoration: BoxDecoration(
                   color: AppColors.peachDeep,
                   borderRadius: BorderRadius.circular(999),
@@ -338,16 +336,16 @@ class _ScaleEditor extends StatelessWidget {
                 child: Text(
                   '$value',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                        fontWeight: FontWeight.w600,
+                      ),
                 ),
               ),
               Text(
                 q.maxLabel ?? '${q.max}',
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  color: AppColors.textSecondary,
-                  fontWeight: FontWeight.w600,
-                ),
+                      color: AppColors.textSecondary,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
             ],
           ),

@@ -3,7 +3,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/skin_journey_provider.dart';
-import 'screens/onboarding/ai_data_consent_screen.dart';
 import 'screens/onboarding/onboarding_flow_screen.dart';
 import 'screens/shell/main_shell_screen.dart';
 import 'services/local_storage.dart';
@@ -16,20 +15,20 @@ Future<void> main() async {
   runApp(
     ChangeNotifierProvider(
       create: (_) => MoleJourneyNotifier(storage),
-      child: const SkinCareAiApp(),
+      child: const MoleTrackApp(),
     ),
   );
 }
 
-class SkinCareAiApp extends StatelessWidget {
-  const SkinCareAiApp({super.key});
+class MoleTrackApp extends StatelessWidget {
+  const MoleTrackApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     final n = context.watch<MoleJourneyNotifier>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Skin Care AI: Routine Coach',
+      title: 'Mole Track: Photo Check-ins',
       theme: buildAppTheme(),
       darkTheme: buildDarkAppTheme(),
       themeMode: n.darkModeEnabled ? ThemeMode.dark : ThemeMode.light,
@@ -52,9 +51,6 @@ class _Bootstrap extends StatelessWidget {
     }
     if (!n.onboardingComplete) {
       return const OnboardingFlowScreen();
-    }
-    if (n.shouldShowAiConsentPrompt) {
-      return const AiDataConsentScreen();
     }
     return const MainShellScreen();
   }

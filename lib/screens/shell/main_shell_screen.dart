@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import '../../providers/skin_journey_provider.dart';
 import '../../widgets/premium_dialog.dart';
-import '../onboarding/ai_data_consent_screen.dart';
 import '../ai/photo_analysis_result_screen.dart';
 import '../tabs/care_tab.dart';
 import '../tabs/daily_tab.dart';
@@ -23,7 +22,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
   int _index = 0;
   final ImagePicker _picker = ImagePicker();
 
-  static const _titles = ['Home', 'Routine', 'Progress', 'Habits'];
+  static const _titles = ['Home', 'Care', 'Evolution', 'Daily'];
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +77,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
                           const SizedBox(width: 12),
                           Expanded(
                             child: Text(
-                              'Setting up your personalized skincare insights...',
+                              'Setting up your personalized mole insights...',
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
@@ -168,15 +167,13 @@ class _MainShellScreenState extends State<MainShellScreen> {
             ListTile(
               leading: const Icon(Icons.photo_camera_outlined),
               title: const Text('Take photo'),
-              subtitle: const Text(
-                'Capture a clear photo of the area you track',
-              ),
+              subtitle: const Text('Capture a clear photo of the area you track'),
               onTap: () => Navigator.pop(ctx, ImageSource.camera),
             ),
             ListTile(
               leading: const Icon(Icons.photo_library_outlined),
               title: const Text('Choose from gallery'),
-              subtitle: const Text('Upload an existing skin progress photo'),
+              subtitle: const Text('Upload an existing mole-map photo'),
               onTap: () => Navigator.pop(ctx, ImageSource.gallery),
             ),
           ],
@@ -207,9 +204,6 @@ class _MainShellScreenState extends State<MainShellScreen> {
     if (file == null || !context.mounted) return;
 
     final notifier = context.read<MoleJourneyNotifier>();
-    final wantsAiAnalysis = await requestAiDataSharingConsent(context);
-    if (!context.mounted) return;
-
     try {
       await notifier.addProgressPhotoPath(file.path);
     } on StateError catch (e) {
@@ -220,21 +214,6 @@ class _MainShellScreenState extends State<MainShellScreen> {
     }
 
     if (!context.mounted) return;
-
-    if (!wantsAiAnalysis) {
-      setState(() => _index = 2);
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Photo saved. Enable AI data sharing in Settings to analyze it.',
-            ),
-          ),
-        );
-      }
-      return;
-    }
-
     showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -247,7 +226,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
               child: CircularProgressIndicator(strokeWidth: 2.6),
             ),
             SizedBox(width: 12),
-            Expanded(child: Text('Analyzing skin photo...')),
+            Expanded(child: Text('Analyzing mole photo...')),
           ],
         ),
       ),
@@ -264,6 +243,7 @@ class _MainShellScreenState extends State<MainShellScreen> {
       ),
     );
   }
+
 }
 
 class _NavItem extends StatelessWidget {
@@ -312,9 +292,9 @@ class _NavItem extends StatelessWidget {
                 Text(
                   label,
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: color,
-                  ),
+                        fontWeight: FontWeight.w600,
+                        color: color,
+                      ),
                 ),
               ],
             ),

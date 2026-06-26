@@ -1,5 +1,5 @@
-name: skin_care_ai
-description: Skin Care AI — skincare routine coaching and photo progress check-ins with local-first storage.
+name: mole_track_ai
+description: Mole tracking and photo check-ins with local-first storage.
 publish_to: "none"
 version: 1.0.0+3
 

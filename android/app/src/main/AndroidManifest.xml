@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="Skin Care AI: Routine Coach"
+        android:label="Mole Track: Photo Check-ins"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

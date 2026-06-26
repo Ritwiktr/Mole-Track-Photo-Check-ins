@@ -26,7 +26,7 @@ abstract final class AiConfig {
     if (v != null && v.isNotEmpty) return v;
     return const String.fromEnvironment(
       'OPENROUTER_HTTP_REFERER',
-      defaultValue: 'https://skincare.routineai.local',
+      defaultValue: 'https://moletrack.local',
     );
   }
 
@@ -35,7 +35,7 @@ abstract final class AiConfig {
     if (v != null && v.isNotEmpty) return v;
     return const String.fromEnvironment(
       'OPENROUTER_APP_TITLE',
-      defaultValue: 'Skin Care AI: Routine Coach',
+      defaultValue: 'MoleTrack AI',
     );
   }
 }

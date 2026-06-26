@@ -40,7 +40,7 @@ class HomeTab extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'AI plan',
+                    'mole map',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: scheme.onSurfaceVariant,
                         ),
@@ -106,7 +106,7 @@ class HomeTab extends StatelessWidget {
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                'Stay consistent with SPF, hydration, and check-ins this week.',
+                                'Keep consistent photos and SPF for the clearest comparisons this week.',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall
@@ -127,7 +127,7 @@ class HomeTab extends StatelessWidget {
                       _softDivider(context),
                       _metricRow(
                         context,
-                        'Next AI check-in',
+                        'Next guided check-in',
                         '${n.nextCheckInDaysEstimate} days',
                       ),
                       _softDivider(context),
@@ -140,7 +140,7 @@ class HomeTab extends StatelessWidget {
                           const SizedBox(width: 10),
                           Expanded(
                             child: Text(
-                              'Reach ${(clearance * 100).round()}% of your weekly goal',
+                              'Reach up to ${(clearance * 100).round()}% of your monitoring goal',
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ),
@@ -165,14 +165,14 @@ class HomeTab extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Skin routine score',
+                                  'Mole watch score',
                                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                                         color: scheme.onSurfaceVariant,
                                       ),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'Higher means your routine habits are staying consistent.',
+                                  'Higher means stronger habits for spotting changes early.',
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -201,10 +201,10 @@ class HomeTab extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _metricRow(context, 'Skin pattern summary', n.molePatternLabel),
+                      _metricRow(context, 'Pattern summary', n.molePatternLabel),
                       _softDivider(context),
                       Text(
-                        'Current focus',
+                        'Monitoring focus',
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                               color: scheme.onSurfaceVariant,
                             ),
@@ -233,7 +233,7 @@ class HomeTab extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Progress check-in',
+                                  'Photo check-in',
                                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                                         color: scheme.onSurfaceVariant,
                                       ),
@@ -247,7 +247,7 @@ class HomeTab extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'Next check-in • ${DateFormat.MMMd().format(target)}',
+                                  'Next guided check-in • ${DateFormat.MMMd().format(target)}',
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],

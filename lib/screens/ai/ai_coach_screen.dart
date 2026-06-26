@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../screens/onboarding/ai_data_consent_screen.dart';
 import '../../providers/skin_journey_provider.dart';
 import '../../theme/app_colors.dart';
 import '../../widgets/soft_components.dart';
@@ -29,10 +28,6 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
     if (text.trim().isEmpty) return;
     final notifier = context.read<MoleJourneyNotifier>();
     if (notifier.chatAwaitingReply) return;
-
-    final canSend = await requestAiDataSharingConsent(context);
-    if (!mounted || !canSend) return;
-
     _controller.clear();
     await notifier.sendChat(text);
     if (!mounted) return;
@@ -76,9 +71,9 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text('Skin Care AI'),
+                    const Text('MoleTrack AI+'),
                     Text(
-                      'Routine Coach',
+                      'Mole & sun-safety coach',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -105,10 +100,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                 child: SoftCard(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 8,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                   child: Row(
                     children: [
                       Expanded(
@@ -118,8 +110,7 @@ class _AiCoachScreenState extends State<AiCoachScreen> {
                           onSubmitted: (_) => _send(),
                           enabled: !busy,
                           decoration: const InputDecoration(
-                            hintText:
-                                'Ask anything about skincare routine or products…',
+                            hintText: 'Ask anything about moles or photo check-ins…',
                             filled: false,
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: 10,
@@ -181,9 +172,8 @@ class _Bubble extends StatelessWidget {
           maxWidth: MediaQuery.sizeOf(context).width * 0.86,
         ),
         child: Column(
-          crossAxisAlignment: user
-              ? CrossAxisAlignment.end
-              : CrossAxisAlignment.start,
+          crossAxisAlignment:
+              user ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             DecoratedBox(
               decoration: BoxDecoration(
@@ -206,15 +196,13 @@ class _Bubble extends StatelessWidget {
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 12,
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                 child: Text(
                   message.text,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(height: 1.4),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        height: 1.4,
+                      ),
                 ),
               ),
             ),
@@ -238,7 +226,9 @@ class _Bubble extends StatelessWidget {
                           children: [
                             Text(
                               p.brand,
-                              style: Theme.of(context).textTheme.labelMedium
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium
                                   ?.copyWith(
                                     color: scheme.onSurfaceVariant,
                                     fontWeight: FontWeight.w700,
@@ -249,7 +239,9 @@ class _Bubble extends StatelessWidget {
                               p.name,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.titleSmall
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall
                                   ?.copyWith(fontWeight: FontWeight.w600),
                             ),
                             const SizedBox(height: 6),
@@ -257,7 +249,9 @@ class _Bubble extends StatelessWidget {
                               p.hint,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.bodySmall
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
                                   ?.copyWith(
                                     color: scheme.onSurfaceVariant,
                                     height: 1.25,
