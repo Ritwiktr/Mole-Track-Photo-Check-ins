@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Mole Track: Photo Check-ins</string>
+	<string>AI Dermatologist</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Mole Track: Photo Check-ins</string>
+	<string>AI Dermatologist</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -25,11 +25,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Mole Track uses the camera to capture skin photos for mole check-ins.</string>
+	<string>AI Dermatologist uses the camera to capture dermatology progress photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Mole Track uses your photo library so you can upload mole-map photos.</string>
+	<string>AI Dermatologist uses your photo library so you can upload skin condition photos.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Mole Track may save selected photos to your library when you choose to do so.</string>
+	<string>AI Dermatologist may save selected photos to your library when you choose to do so.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

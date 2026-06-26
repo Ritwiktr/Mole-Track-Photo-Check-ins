@@ -27,7 +27,7 @@ class _EvolutionTabState extends State<EvolutionTab> {
     final isPremium = n.isPremium;
     final visibleHistory = isPremium ? history : history.take(1).toList();
 
-    return PeachBackdrop(
+    return DermBackdrop(
       child: ListView(
         padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
         physics: const BouncingScrollPhysics(),
@@ -37,7 +37,7 @@ class _EvolutionTabState extends State<EvolutionTab> {
               const Icon(Icons.history_rounded, color: AppColors.accent),
               const SizedBox(width: 8),
               Text(
-                'Mole analysis history',
+                'Progress timeline',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
             ],
@@ -49,7 +49,7 @@ class _EvolutionTabState extends State<EvolutionTab> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Free plan shows only your latest mole summary and limits uploads to 1 per week.',
+                    'Free plan includes your latest result and 1 upload per week.',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 8),
@@ -64,7 +64,7 @@ class _EvolutionTabState extends State<EvolutionTab> {
           if (visibleHistory.isEmpty)
             SoftCard(
               child: Text(
-                'No analysis yet. Tap + to add a photo and generate your first mole check-in.',
+                'No entries yet. Tap + to add a photo and create your first progress check-in.',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             )

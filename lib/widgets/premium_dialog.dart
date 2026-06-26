@@ -34,20 +34,23 @@ class _PremiumDialogState extends State<_PremiumDialog> {
     final options = <_PlanOption>[
       _PlanOption(
         title: 'Monthly',
-        subtitle: 'Unlimited uploads + full mole insights (auto-renews monthly)',
+        subtitle:
+            'Unlimited scans, full insights, and AI dermatology help (monthly)',
         fallbackPrice: '\$4.99',
         productId: MoleJourneyNotifier.monthlyProductId,
       ),
       _PlanOption(
         title: 'Yearly',
-        subtitle: 'Unlimited uploads + full mole insights (auto-renews yearly)',
+        subtitle:
+            'Unlimited scans, full insights, and AI dermatology help (yearly)',
         fallbackPrice: '\$29.99',
         productId: MoleJourneyNotifier.yearlyProductId,
         badge: 'Best value',
       ),
       _PlanOption(
         title: 'Lifetime',
-        subtitle: 'One-time purchase: unlimited uploads + full mole insights',
+        subtitle:
+            'Pay once: unlimited scans, full insights, and AI dermatology help',
         fallbackPrice: '\$59.99',
         productId: MoleJourneyNotifier.lifetimeProductId,
       ),
@@ -98,9 +101,9 @@ class _PremiumDialogState extends State<_PremiumDialog> {
             ),
             const SizedBox(height: 6),
             Text(
-              '• Unlimited weekly photo uploads\n'
-              '• Complete progress history\n'
-              '• Full AI mole insights and trend tracking',
+              '• Unlimited photo scans and check-ins\n'
+              '• Full progress timeline and history\n'
+              '• Advanced AI insights + personalized dermatology coaching',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: scheme.onSurfaceVariant,
                 height: 1.35,
@@ -110,9 +113,11 @@ class _PremiumDialogState extends State<_PremiumDialog> {
             ...options.map(
               (option) => _PlanTile(
                 option: option,
-                price: products[option.productId]?.price ?? option.fallbackPrice,
+                price:
+                    products[option.productId]?.price ?? option.fallbackPrice,
                 selected: _selectedProductId == option.productId,
-                onTap: () => setState(() => _selectedProductId = option.productId),
+                onTap: () =>
+                    setState(() => _selectedProductId = option.productId),
               ),
             ),
             if (n.purchaseError != null) ...[
@@ -126,7 +131,7 @@ class _PremiumDialogState extends State<_PremiumDialog> {
             ],
             const SizedBox(height: 4),
             Text(
-              'Monthly and Yearly renew automatically until canceled in App Store settings.',
+              'Monthly and Yearly plans auto-renew until canceled in App Store settings.',
               style: theme.textTheme.bodySmall?.copyWith(
                 color: scheme.onSurfaceVariant,
               ),
@@ -212,7 +217,7 @@ class _PlanTile extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 180),
-      margin: const EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.only(bottom: 10),
         padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
         decoration: BoxDecoration(
           color: selected
@@ -225,7 +230,7 @@ class _PlanTile extends StatelessWidget {
                 : scheme.outline.withValues(alpha: 0.25),
             width: selected ? 1.4 : 1.0,
           ),
-                        ),
+        ),
         child: Row(
           children: [
             Icon(

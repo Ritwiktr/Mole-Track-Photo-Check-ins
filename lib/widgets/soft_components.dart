@@ -271,9 +271,9 @@ class WeekDots extends StatelessWidget {
   }
 }
 
-/// Frosted app bar replacement for hero sections.
-class PeachBackdrop extends StatelessWidget {
-  const PeachBackdrop({super.key, required this.child});
+/// Clinical gradient backdrop for hero sections.
+class DermBackdrop extends StatelessWidget {
+  const DermBackdrop({super.key, required this.child});
 
   final Widget child;
 
@@ -287,13 +287,13 @@ class PeachBackdrop extends StatelessWidget {
           end: Alignment.bottomRight,
           colors: [
             if (isDark) ...[
-              const Color(0xFF191A1E),
-              const Color(0xFF141518),
-              const Color(0xFF101114),
+              const Color(0xFF111827),
+              const Color(0xFF0B1120),
+              const Color(0xFF070D18),
             ] else ...[
-              AppColors.peachDeep,
-              AppColors.peach,
-              const Color(0xFFFFFDFB),
+              AppColors.surfaceDeep,
+              AppColors.surfaceLight,
+              const Color(0xFFF8FCFE),
             ],
           ],
         ),

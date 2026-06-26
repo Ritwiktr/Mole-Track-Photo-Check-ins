@@ -1,5 +1,5 @@
-name: mole_track_ai
-description: Mole tracking and photo check-ins with local-first storage.
+name: ai_dermatologist
+description: AI Dermatologist — dermatology guidance, treatment tracking, and photo progress check-ins with local-first storage.
 publish_to: "none"
 version: 1.0.0+3
 

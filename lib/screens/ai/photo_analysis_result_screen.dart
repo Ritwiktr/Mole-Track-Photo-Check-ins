@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../providers/skin_journey_provider.dart';
 import '../../theme/app_colors.dart';
+import '../../widgets/medical_sources_panel.dart';
 import '../../widgets/soft_components.dart';
 
 class PhotoAnalysisResultScreen extends StatelessWidget {
@@ -16,10 +17,10 @@ class PhotoAnalysisResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final sections = _buildSections(entry.analysis);
-    return PeachBackdrop(
+    return DermBackdrop(
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        appBar: AppBar(title: const Text('Mole analysis')),
+        appBar: AppBar(title: const Text('Dermatology analysis')),
         body: ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
           children: [
@@ -68,6 +69,10 @@ class PhotoAnalysisResultScreen extends StatelessWidget {
                   ),
                 )
                 ,
+            const SizedBox(height: 12),
+            SoftCard(
+              child: const MedicalSourcesPanel(compact: true),
+            ),
           ],
         ),
       ),
@@ -159,7 +164,7 @@ class PhotoAnalysisResultScreen extends StatelessWidget {
         bullets: caution.take(3).toList(),
       ),
       _UiSection(
-        title: 'When to see a dermatologist',
+        title: 'When to consult a professional',
         icon: Icons.local_hospital_outlined,
         bullets: const [],
         paragraph: derm.take(2).join(' '),

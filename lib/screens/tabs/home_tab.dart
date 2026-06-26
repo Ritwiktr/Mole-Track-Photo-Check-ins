@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../providers/skin_journey_provider.dart';
 import '../settings/settings_screen.dart';
 import '../../theme/app_colors.dart';
+import '../../widgets/medical_sources_panel.dart';
 import '../../widgets/soft_components.dart';
 
 class HomeTab extends StatelessWidget {
@@ -22,7 +23,7 @@ class HomeTab extends StatelessWidget {
     final healing = n.monitoringPercent;
     final target = DateTime.now().add(const Duration(days: 28));
 
-    return PeachBackdrop(
+    return DermBackdrop(
       child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -40,7 +41,7 @@ class HomeTab extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'mole map',
+                    'Derm plan',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: scheme.onSurfaceVariant,
                         ),
@@ -106,7 +107,7 @@ class HomeTab extends StatelessWidget {
                               ),
                               const SizedBox(height: 2),
                               Text(
-                                'Keep consistent photos and SPF for the clearest comparisons this week.',
+                                'Stay consistent with treatment, sun protection, and check-ins this week.',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodySmall
@@ -127,7 +128,7 @@ class HomeTab extends StatelessWidget {
                       _softDivider(context),
                       _metricRow(
                         context,
-                        'Next guided check-in',
+                        'Next AI check-in',
                         '${n.nextCheckInDaysEstimate} days',
                       ),
                       _softDivider(context),
@@ -140,7 +141,7 @@ class HomeTab extends StatelessWidget {
                           const SizedBox(width: 10),
                           Expanded(
                             child: Text(
-                              'Reach up to ${(clearance * 100).round()}% of your monitoring goal',
+                              'Reach ${(clearance * 100).round()}% of your weekly goal',
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ),
@@ -165,14 +166,14 @@ class HomeTab extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Mole watch score',
+                                  'Skin health score',
                                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                                         color: scheme.onSurfaceVariant,
                                       ),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'Higher means stronger habits for spotting changes early.',
+                                  'Higher means your treatment habits are staying consistent.',
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -201,10 +202,10 @@ class HomeTab extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _metricRow(context, 'Pattern summary', n.molePatternLabel),
+                      _metricRow(context, 'Condition summary', n.molePatternLabel),
                       _softDivider(context),
                       Text(
-                        'Monitoring focus',
+                        'Current focus',
                         style: Theme.of(context).textTheme.labelLarge?.copyWith(
                               color: scheme.onSurfaceVariant,
                             ),
@@ -233,7 +234,7 @@ class HomeTab extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Photo check-in',
+                                  'Progress check-in',
                                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                                         color: scheme.onSurfaceVariant,
                                       ),
@@ -247,7 +248,7 @@ class HomeTab extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
-                                  'Next guided check-in • ${DateFormat.MMMd().format(target)}',
+                                  'Next check-in • ${DateFormat.MMMd().format(target)}',
                                   style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
@@ -261,6 +262,23 @@ class HomeTab extends StatelessWidget {
                         ],
                       ),
                     ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                SoftCard(
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(Icons.menu_book_outlined, color: scheme.primary),
+                    title: const Text('Health information sources'),
+                    subtitle: const Text('AAD, NIH, FDA & CDC citations'),
+                    trailing: const Icon(Icons.chevron_right_rounded),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const MedicalSourcesScreen(),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ]),

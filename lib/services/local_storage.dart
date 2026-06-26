@@ -14,6 +14,8 @@ const _kAiGeneratedContent = 'ai_generated_content_v1';
 const _kPremiumActive = 'premium_active_v1';
 const _kActivePremiumProductId = 'active_premium_product_id_v1';
 const _kUploadTimestamps = 'upload_timestamps_v1';
+const _kAiDataSharingConsent = 'ai_data_sharing_consent_v1';
+const _kAiConsentPromptDismissed = 'ai_consent_prompt_dismissed_v1';
 
 class LocalStorage {
   LocalStorage(this._prefs);
@@ -127,10 +129,23 @@ class LocalStorage {
         .toList(growable: false);
   }
 
-  Future<void> saveUploadTimestamps(List<int> timestamps) => _prefs.setStringList(
-    _kUploadTimestamps,
-    timestamps.map((e) => e.toString()).toList(),
-  );
+  Future<void> saveUploadTimestamps(List<int> timestamps) =>
+      _prefs.setStringList(
+        _kUploadTimestamps,
+        timestamps.map((e) => e.toString()).toList(),
+      );
+
+  bool get aiDataSharingConsented =>
+      _prefs.getBool(_kAiDataSharingConsent) ?? false;
+
+  Future<void> setAiDataSharingConsent(bool value) =>
+      _prefs.setBool(_kAiDataSharingConsent, value);
+
+  bool get aiConsentPromptDismissed =>
+      _prefs.getBool(_kAiConsentPromptDismissed) ?? false;
+
+  Future<void> setAiConsentPromptDismissed(bool value) =>
+      _prefs.setBool(_kAiConsentPromptDismissed, value);
 
   String _dailyKey(DateTime d) =>
       '$_kDailyTasksPrefix${d.year}-${d.month}-${d.day}';

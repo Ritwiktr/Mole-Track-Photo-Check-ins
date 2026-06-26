@@ -5,20 +5,13 @@ import '../../providers/skin_journey_provider.dart';
 import '../../theme/app_colors.dart';
 import '../../widgets/soft_components.dart';
 
-class CareTab extends StatefulWidget {
+class CareTab extends StatelessWidget {
   const CareTab({super.key});
-
-  @override
-  State<CareTab> createState() => _CareTabState();
-}
-
-class _CareTabState extends State<CareTab> {
-  int _inner = 0; // 0 routine, 1 nutrition
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
-    return PeachBackdrop(
+    return DermBackdrop(
       child: Column(
         children: [
           Padding(
@@ -27,7 +20,7 @@ class _CareTabState extends State<CareTab> {
               children: [
                 Expanded(
                   child: Text(
-                    'Care plan',
+                    'Treatment plan',
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -58,25 +51,7 @@ class _CareTabState extends State<CareTab> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 14, 20, 8),
-            child: SegmentedTwo(
-              left: 'Routine',
-              right: 'Nutrition',
-              isLeftSelected: _inner == 0,
-              onChanged: (v) => setState(() => _inner = v ? 0 : 1),
-            ),
-          ),
-          Expanded(
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 280),
-              switchInCurve: Curves.easeOutCubic,
-              switchOutCurve: Curves.easeInCubic,
-              child: _inner == 0
-                  ? const _RoutinePanel(key: ValueKey('r'))
-                  : const _NutritionPanel(key: ValueKey('n')),
-            ),
-          ),
+          const Expanded(child: _RoutinePanel()),
         ],
       ),
     );
@@ -84,7 +59,7 @@ class _CareTabState extends State<CareTab> {
 }
 
 class _RoutinePanel extends StatefulWidget {
-  const _RoutinePanel({super.key});
+  const _RoutinePanel();
 
   @override
   State<_RoutinePanel> createState() => _RoutinePanelState();
@@ -101,7 +76,7 @@ class _RoutinePanelState extends State<_RoutinePanel> {
     final steps = _morning ? n.morningSteps : n.nightSteps;
 
     return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 120),
+      padding: const EdgeInsets.fromLTRB(20, 14, 20, 120),
       physics: const BouncingScrollPhysics(),
       children: [
         SoftCard(
@@ -115,7 +90,7 @@ class _RoutinePanelState extends State<_RoutinePanel> {
                   color: AppColors.accentSoft.withValues(alpha: 0.3),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(Icons.spa_outlined, color: AppColors.accent),
+                child: const Icon(Icons.medical_services_outlined, color: AppColors.accent),
               ),
               const SizedBox(width: 10),
               Expanded(
@@ -123,12 +98,12 @@ class _RoutinePanelState extends State<_RoutinePanel> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Mole-friendly care, simplified',
+                      'Clear treatment steps, better outcomes',
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'Sunscreen, gentle cleansing, and steady photo angles.',
+                      'Follow AM/PM dermatology steps for steady, visible progress.',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -151,188 +126,66 @@ class _RoutinePanelState extends State<_RoutinePanel> {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: steps.isEmpty
               ? Text(
-                  'No AI routine steps yet. Add an API key to generate personalized mole-care steps.',
+                  'No AI treatment steps yet. Add an API key to generate personalized dermatology steps.',
                   style: Theme.of(context).textTheme.bodySmall,
                 )
               : Column(
                   children: List.generate(steps.length, (index) {
                     final s = steps[index];
                     return Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 42,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: AppColors.peachDeep,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Icon(
-                          _routineIcon(s.category),
-                          color: AppColors.accent,
-                          size: 20,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
+                      children: [
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              s.category,
-                              style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                                    color: scheme.onSurfaceVariant,
+                            Container(
+                              width: 42,
+                              height: 42,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: AppColors.surfaceDeep,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Icon(
+                                _routineIcon(s.category),
+                                color: AppColors.accent,
+                                size: 20,
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    s.category,
+                                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                                          color: scheme.onSurfaceVariant,
+                                        ),
                                   ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    s.productName,
+                                    style: Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    s.blurb,
+                                    style: Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ],
+                              ),
                             ),
-                            const SizedBox(height: 2),
-                            Text(
-                              s.productName,
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              s.blurb,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Checkbox.adaptive(
-                        value: n.isStepDone(period, s.id),
-                        activeColor: AppColors.accent,
-                        onChanged: (_) => n.toggleRoutine(period, s.id),
-                      ),
-                    ],
-                  ),
-                  if (index != steps.length - 1) const Divider(height: 14),
-                ],
-              );
-            }),
-                ),
-        ),
-      ],
-    );
-  }
-}
-
-class _NutritionPanel extends StatelessWidget {
-  const _NutritionPanel({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    final foods = context.watch<MoleJourneyNotifier>().nutritionItems;
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 120),
-      physics: const BouncingScrollPhysics(),
-      children: [
-        SoftCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    'Nutrition',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w700,
-                        ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Icon(Icons.restaurant_menu_rounded, color: AppColors.accent),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'Small upgrades support skin resilience and sun recovery — stored locally, no accounts.',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: scheme.onSurfaceVariant,
-                      height: 1.4,
-                    ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 14),
-        SoftCard(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-          child: foods.isEmpty
-              ? Text(
-                  'No AI nutrition suggestions yet. Add an API key for antioxidant-forward picks.',
-                  style: Theme.of(context).textTheme.bodySmall,
-                )
-              : Column(
-                  children: List.generate(foods.length, (i) {
-                    final f = foods[i];
-                    return Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 42,
-                        height: 42,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: scheme.surfaceContainerHighest.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: scheme.outline.withValues(alpha: 0.45),
-                          ),
-                        ),
-                        child: Icon(
-                          _foodIcon(f.name),
-                          color: AppColors.accent,
-                          size: 20,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              f.name,
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                            const SizedBox(height: 2),
-                            Text(f.amount, style: Theme.of(context).textTheme.bodySmall),
-                            const SizedBox(height: 6),
-                            Wrap(
-                              spacing: 6,
-                              runSpacing: 6,
-                              children: f.tags
-                                  .map(
-                                    (t) => Container(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 8,
-                                        vertical: 3,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: scheme.surfaceContainerHighest
-                                            .withValues(alpha: 0.55),
-                                        borderRadius: BorderRadius.circular(999),
-                                      ),
-                                      child: Text(
-                                        t,
-                                        style: Theme.of(context).textTheme.labelSmall,
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
+                            Checkbox.adaptive(
+                              value: n.isStepDone(period, s.id),
+                              activeColor: AppColors.accent,
+                              onChanged: (_) => n.toggleRoutine(period, s.id),
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                  if (i != foods.length - 1) const Divider(height: 14),
-                ],
-              );
-            }),
+                        if (index != steps.length - 1) const Divider(height: 14),
+                      ],
+                    );
+                  }),
                 ),
         ),
       ],
@@ -348,13 +201,4 @@ IconData _routineIcon(String category) {
   if (key.contains('protect')) return Icons.shield_outlined;
   if (key.contains('barrier')) return Icons.security_outlined;
   return Icons.spa_outlined;
-}
-
-IconData _foodIcon(String name) {
-  final key = name.toLowerCase();
-  if (key.contains('spinach')) return Icons.eco_outlined;
-  if (key.contains('tea')) return Icons.emoji_food_beverage_outlined;
-  if (key.contains('blue')) return Icons.circle_outlined;
-  if (key.contains('walnut')) return Icons.grain_outlined;
-  return Icons.restaurant_outlined;
 }

@@ -34,35 +34,6 @@ class DailyHabit {
   final String emoji;
 }
 
-class NutritionItem {
-  const NutritionItem({
-    required this.id,
-    required this.name,
-    required this.amount,
-    required this.tags,
-  });
-
-  final String id;
-  final String name;
-  final String amount;
-  final List<String> tags;
-
-  Map<String, dynamic> toJson() =>
-      {'id': id, 'name': name, 'amount': amount, 'tags': tags};
-
-  factory NutritionItem.fromJson(Map<String, dynamic> json) {
-    final tagsRaw = json['tags'];
-    return NutritionItem(
-      id: json['id']?.toString() ?? '',
-      name: json['name']?.toString() ?? '',
-      amount: json['amount']?.toString() ?? '',
-      tags: tagsRaw is List
-          ? tagsRaw.map((e) => e.toString()).where((e) => e.isNotEmpty).toList()
-          : const [],
-    );
-  }
-}
-
 class ChatMessage {
   const ChatMessage({
     required this.text,
@@ -144,6 +115,15 @@ class MoleJourneyNotifier extends ChangeNotifier {
 
   bool get onboardingComplete => _storage.onboardingComplete;
 
+  bool get aiDataSharingConsented => _storage.aiDataSharingConsented;
+
+  bool get aiConsentPromptDismissed => _storage.aiConsentPromptDismissed;
+
+  bool get shouldShowAiConsentPrompt =>
+      onboardingComplete &&
+      !aiDataSharingConsented &&
+      !aiConsentPromptDismissed;
+
   Map<String, dynamic> answers = {};
   final Map<String, Set<String>> _routineChecked = {'morning': {}, 'night': {}};
   DateTime selectedDaily = DateTime.now();
@@ -164,7 +144,6 @@ class MoleJourneyNotifier extends ChangeNotifier {
   List<RoutineStep> _morningSteps = const [];
   List<RoutineStep> _nightSteps = const [];
   List<DailyHabit> _dailyHabits = const [];
-  List<NutritionItem> _nutritionItems = const [];
   String _mainCause = '—';
   String _molePatternLabel = '—';
   double _monitoringPercent = 0;
@@ -187,7 +166,9 @@ class MoleJourneyNotifier extends ChangeNotifier {
     _uploadTimestamps = _storage.uploadTimestamps;
     _applyAiContent(_storage.aiGeneratedContent);
     await _bootstrapPurchases();
-    await _refreshAiContentIfPossible();
+    if (aiDataSharingConsented) {
+      await _refreshAiContentIfPossible();
+    }
     _loadDay(selectedDaily);
     hydrated = true;
     notifyListeners();
@@ -237,7 +218,6 @@ class MoleJourneyNotifier extends ChangeNotifier {
   List<RoutineStep> get morningSteps => List.unmodifiable(_morningSteps);
   List<RoutineStep> get nightSteps => List.unmodifiable(_nightSteps);
   List<DailyHabit> get dailyHabits => List.unmodifiable(_dailyHabits);
-  List<NutritionItem> get nutritionItems => List.unmodifiable(_nutritionItems);
   bool get darkModeEnabled => _darkModeEnabled;
   bool get isPremium => _isPremium;
   bool get purchaseLoading => _purchaseLoading;
@@ -287,13 +267,27 @@ class MoleJourneyNotifier extends ChangeNotifier {
         analysis:
             'Photo analysis needs AI API setup first.\n\n'
             'Add OPENROUTER_API_KEY to your `.env` file, then try again.\n'
-            'Once enabled, you will get mole-focused observations and weekly comparisons.',
+            'Once enabled, you will get dermatology-focused observations and weekly comparisons.',
         createdAt: now,
       );
       if (AiConfig.openRouterApiKey.isEmpty) {
         lastPhotoAnalysis = fallbackEntry.analysis;
         await _appendPhotoAnalysisEntry(fallbackEntry);
         return fallbackEntry;
+      }
+
+      if (!aiDataSharingConsented) {
+        final entry = MolePhotoAnalysisEntry(
+          id: now.microsecondsSinceEpoch.toString(),
+          imagePath: imagePath,
+          analysis:
+              'Photo saved locally. Enable AI data sharing in Settings to '
+              'send this photo to our third-party AI provider for analysis.',
+          createdAt: now,
+        );
+        lastPhotoAnalysis = entry.analysis;
+        await _appendPhotoAnalysisEntry(entry);
+        return entry;
       }
 
       final bytes = await File(imagePath).readAsBytes();
@@ -312,7 +306,7 @@ class MoleJourneyNotifier extends ChangeNotifier {
       lastPhotoAnalysis = analysis;
       await _appendPhotoAnalysisEntry(entry);
       chat.add(const ChatMessage(
-        text: 'I uploaded a photo for mole map-style analysis.',
+        text: 'I uploaded a photo for dermatology analysis.',
         isUser: true,
       ));
       chat.add(ChatMessage(text: analysis, isUser: false));
@@ -380,7 +374,24 @@ class MoleJourneyNotifier extends ChangeNotifier {
     await _storage.setOnboardingComplete(true);
     _loadDay(selectedDaily);
     notifyListeners();
-    unawaited(_refreshAiContentIfPossible(showLoading: true));
+  }
+
+  Future<void> grantAiDataSharingConsent() async {
+    if (aiDataSharingConsented) return;
+    await _storage.setAiDataSharingConsent(true);
+    notifyListeners();
+    await _refreshAiContentIfPossible(showLoading: true);
+  }
+
+  Future<void> revokeAiDataSharingConsent() async {
+    if (!aiDataSharingConsented) return;
+    await _storage.setAiDataSharingConsent(false);
+    notifyListeners();
+  }
+
+  Future<void> dismissAiConsentPrompt() async {
+    await _storage.setAiConsentPromptDismissed(true);
+    notifyListeners();
   }
 
   Future<void> sendChat(String text) async {
@@ -391,6 +402,20 @@ class MoleJourneyNotifier extends ChangeNotifier {
 
     if (AiConfig.openRouterApiKey.isEmpty) {
       _replyOfflineNoApiKey();
+      notifyListeners();
+      return;
+    }
+
+    if (!aiDataSharingConsented) {
+      chat.add(
+        const ChatMessage(
+          text:
+              'AI coach replies require your permission to share data with '
+              'our third-party AI provider. Enable AI data sharing in Settings, '
+              'or agree when prompted.',
+          isUser: false,
+        ),
+      );
       notifyListeners();
       return;
     }
@@ -450,17 +475,19 @@ class MoleJourneyNotifier extends ChangeNotifier {
   String _chatSystemPrompt() {
     final buffer = StringBuffer()
       ..writeln(
-        'You are MoleTrack AI+, a supportive mole-monitoring coach inside a mobile app.',
+        'You are AI Dermatologist, a supportive dermatology assistant inside a mobile app.',
       )
       ..writeln(
-        'You are not a medical professional: do not diagnose skin cancer. '
-        'Encourage in-person evaluation for any new, changing, asymmetric, '
-        'multicolor, large, or bleeding lesions, or anything the user is unsure about.',
+        'You are not a medical professional: do not diagnose medical conditions. '
+        'Encourage in-person evaluation for severe irritation, persistent worsening symptoms, '
+        'or anything the user is unsure about.',
       )
       ..writeln(
         'Be concise and practical (short paragraphs or light bullets). '
-        'Emphasize consistent photos, lighting, and ABCDE self-check habits. '
-        'Reference the user profile when helpful.',
+        'Emphasize routine consistency, gentle progression, SPF use, and progress photos. '
+        'Reference the user profile when helpful. '
+        'For general skin-health facts, align with public sources such as AAD and NIH MedlinePlus. '
+        'Remind users that full citations are available under Health information sources in Settings.',
       )
       ..writeln('User onboarding questionnaire (JSON):')
       ..writeln(jsonEncode(answers));
@@ -469,6 +496,7 @@ class MoleJourneyNotifier extends ChangeNotifier {
 
   Future<void> _refreshAiContentIfPossible({bool showLoading = false}) async {
     if (!onboardingComplete) return;
+    if (!aiDataSharingConsented) return;
     if (AiConfig.openRouterApiKey.isEmpty) return;
     if (showLoading) {
       aiInsightsLoading = true;
@@ -493,7 +521,7 @@ class MoleJourneyNotifier extends ChangeNotifier {
   Future<Map<String, dynamic>> _generateAiContentFromAi() async {
     final response = await _openRouter.chatCompletion(
       systemPrompt:
-          'You generate concise app content JSON for a mole-monitoring and sun-safety assistant. '
+          'You generate concise app content JSON for a dermatology and skin-health assistant. '
           'Return only valid JSON.',
       messages: [
         {
@@ -506,14 +534,12 @@ Return only JSON with keys:
 homeInsights: {mainCause:string, molePatternLabel:string, monitoringPercent:number(0-100), nextCheckInDaysEstimate:number, improvementGoalFraction:number(0-1), moleWatchScore:number(0-100)}
 dailyHabits: [{id:string,title:string,emoji:string}]
 careRoutine: {morning:[{id,category,productName,blurb}], night:[{id,category,productName,blurb}]}
-nutritionItems: [{id,name,amount,tags:string[]}]
 chatSeed: {welcome:string, products:[{brand,name,hint}]}
 
 Constraints:
-- 6 to 10 dailyHabits focused on mole photo habits, sun protection, and self-checks
+- 6 to 10 dailyHabits focused on dermatology consistency, sun protection, and progress tracking
 - 3 to 5 morning steps (SPF, gentle cleansing, documentation tips)
 - 2 to 4 night steps (moisturizer, retinoid only if appropriate for the profile, photo reminders)
-- 3 to 6 nutrition items that support skin resilience (antioxidants, omega-3s, hydration)
 - Short practical text; never claim medical diagnosis.
 '''
         }
@@ -611,16 +637,6 @@ Constraints:
       final night = parseSteps(routine['night']);
       if (morning.isNotEmpty) _morningSteps = morning;
       if (night.isNotEmpty) _nightSteps = night;
-    }
-
-    final nutritionRaw = map['nutritionItems'];
-    if (nutritionRaw is List) {
-      final parsed = nutritionRaw
-          .whereType<Map>()
-          .map((e) => NutritionItem.fromJson(Map<String, dynamic>.from(e)))
-          .where((n) => n.id.isNotEmpty && n.name.isNotEmpty)
-          .toList();
-      if (parsed.isNotEmpty) _nutritionItems = parsed;
     }
 
     final chatSeed = map['chatSeed'];

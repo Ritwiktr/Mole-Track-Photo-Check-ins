@@ -2,9 +2,9 @@
 
 import 'dart:io';
 
-import 'package:mole_track_ai/main.dart';
-import 'package:mole_track_ai/providers/skin_journey_provider.dart';
-import 'package:mole_track_ai/services/local_storage.dart';
+import 'package:ai_dermatologist/main.dart';
+import 'package:ai_dermatologist/providers/skin_journey_provider.dart';
+import 'package:ai_dermatologist/services/local_storage.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -30,10 +30,10 @@ void main() {
     await tester.pumpWidget(
       ChangeNotifierProvider(
         create: (_) => MoleJourneyNotifier(storage),
-        child: const MoleTrackApp(),
+        child: const AiDermatologistApp(),
       ),
     );
     await tester.pump();
-    expect(find.byType(MoleTrackApp), findsOneWidget);
+    expect(find.byType(AiDermatologistApp), findsOneWidget);
   });
 }
